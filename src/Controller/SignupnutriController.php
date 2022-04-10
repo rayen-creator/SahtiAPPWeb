@@ -34,13 +34,24 @@ class SignupnutriController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $image = $form->get('img')->getData();
-            $nutritioniste->setImg($image);
+            $image = $form->get('imgFile')->getData();
+            $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+
+            $fichier = $originalFilename.md5(uniqid()).'.'.$image->guessExtension();
+            $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
+
+            // On copie le fichier dans le dossier uploads
+            $image->move(
+                $destination ,
+                $fichier
+            );
+            $nutritioniste->setImg($fichier);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($nutritioniste);
             //execute query DB
             $em->flush();
-            return $this->redirectToRoute('app_signupnutri');
+            return $this->redirectToRoute('app_login');
         }
         return $this->render('signupnutri/registre.html.twig', ['formN' => $form->createView()]);
 

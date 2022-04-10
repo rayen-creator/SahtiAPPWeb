@@ -3,18 +3,36 @@
 {% block title %}Hello AdminpanelController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <section class="vh-100 bg-image"
+             style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+            <div class="container h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="card" style="border-radius: 15px;">
+                            <div class="card-body p-5">
+                                <h2 class="text-uppercase text-center mb-5">Admin Panel</h2>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <a href="/listclient"  class="btn btn-info"> Manage Client</a>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+                                        </div>
+                                        <div class="col-sm">
+                                            <a href="/listcoach"  class="btn btn-success"> Manage Coach</a>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/3A16/S2/Projet symfony/SahtiWebApp/src/Controller/AdminpanelController.php'|file_link(0) }}">src/Controller/AdminpanelController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/3A16/S2/Projet symfony/SahtiWebApp/templates/adminpanel/index.html.twig'|file_link(0) }}">templates/adminpanel/index.html.twig</a></code></li>
-    </ul>
-</div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <a href="/listnutri" class="btn btn-dark"> Manage Nutristionist</a>
+
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 {% endblock %}

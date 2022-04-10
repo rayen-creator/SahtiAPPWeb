@@ -21,26 +21,26 @@ class EntraineurType extends AbstractType
         $builder
             ->add('nom' ,TextType::class, array(
                 'attr' => array(
-                    'placeholder' => 'nom')))
+                    'placeholder' => 'FirstName')))
             ->add('prenom',TextType::class, array(
                 'attr' => array(
-                    'placeholder' => 'prenom')))
+                    'placeholder' => 'LastName')))
             ->add('email',EmailType::class ,array(
                 'attr' => array(
-                    'placeholder' => 'email')))
+                    'placeholder' => 'Email')))
             ->add('passwd', PasswordType::class,array(
                 'attr' => array(
-                    'placeholder' => 'passwd')))
+                    'placeholder' => 'Password')))
             ->add('adresse', TextType::class, array(
                 'attr' => array(
-                    'placeholder' => 'adresse')))
+                    'placeholder' => 'Address')))
             ->add('bio', TextareaType::class, array(
                 'attr' => array(
-                    'placeholder' => 'bio')))
+                    'placeholder' => 'Bio')))
             ->add('certification', TextareaType::class , array(
                 'attr' => array(
-                    'placeholder' => 'certification')))
-            ->add('img',FileType::class,['mapped'=>false,'required' => false])
+                    'placeholder' => 'Certification')))
+            ->add('imgFile',FileType::class,['mapped'=>false,'required' => false])
             ->add('Registre', SubmitType::class)
             ->add('Cancel', ResetType::class);
 

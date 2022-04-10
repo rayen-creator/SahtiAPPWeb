@@ -33,14 +33,24 @@ class SignupcoachController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('imgFile')->getData();
+            $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
 
-            $image = $form->get('img')->getData();
-            $entraineur->setImg($image);
+            $fichier = $originalFilename.md5(uniqid()).'.'.$image->guessExtension();
+            $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
+
+            // On copie le fichier dans le dossier uploads
+            $image->move(
+                $destination ,
+                $fichier
+            );
+            $entraineur->setImg($fichier);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($entraineur);
             //execute query DB
             $em->flush();
-            return $this->redirectToRoute('app_signupcoach');
+            return $this->redirectToRoute('app_login');
         }
         return $this->render('signupcoach/registre.html.twig', ['formE' => $form->createView()]);
 

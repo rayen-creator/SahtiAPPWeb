@@ -1,0 +1,56 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Hello AdminpanelController!{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <nav class="navbar navbar-example navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+
+                <div class="collapse navbar-collapse" id="navbar-ex-2">
+                    <div class="navbar-nav me-auto">
+                        <a class="nav-item nav-link active" href="/listavailablecoach">List Coach</a>
+                        <a class="nav-item nav-link " href="/listavailablenutri">List Nutritionist</a>
+                    </div>
+
+                    <span class="navbar-text"></span>
+                </div>
+            </div>
+        </nav>
+        <h5 class="card-header">Available Coach's list</h5>
+        <div class="table-responsive text-nowrap">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Address</th>
+                    <th>Bio</th>
+                    <th>Certification</th>
+
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                <tr {% for i in listeE %} >
+                    {% if i.IsBlocked == false %}
+                    <td>{{ i.prenom }}</td>
+                    <td>{{ i.nom }}</td>
+                    <td>{{ i.adresse }}</td>
+                    <td>{{ i.bio }}</td>
+                    <td>{{ i.certification }}</td>
+                    {% else %}
+
+                    {% endif %}
+
+                    <td>
+                        <a href="{{ path ('addcoach',{'id' :i.id}) }}" class="btn btn-success" onclick="return confirm('Are you sure you want to add this coach ?')"/> Work with</a>
+
+                    </td>
+                </tr {% endfor %} >
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

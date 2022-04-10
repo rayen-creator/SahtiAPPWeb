@@ -1,0 +1,51 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ResetpwdController!{% endblock %}
+
+{% block body %}
+
+            <!-- Forgot Password -->
+            <div class="card">
+                <div class="card-body">
+                    <!-- Logo -->
+                    <div class="app-brand justify-content-center">
+                        <a href="/" class="app-brand-link gap-2">
+                            <img src="{{ asset('images/SAHTI without bg.png') }} " height="200px" width="100%" />
+                        </a>
+                    </div>
+                    <!-- /Logo -->
+                    <h4 class="mb-2">Forgot Password? 🔒</h4>
+                    <p class="mb-4">Enter your email and we'll send you instructions to reset your password</p>
+
+                        <div class="mb-3">
+                            {{ form_start(f) }}
+                            {{ form_errors(f.email) }}
+
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                                {{ form_widget(f.email , { 'attr': {'class': 'form-control' }}) }}
+                            </div>
+                            {% for flashMessage in app.session.flashbag.get('alert') %}
+                                <div class="alert alert-danger">
+                                    {{ flashMessage }}
+                                </div>
+                            {% endfor %}
+                            <br/>
+
+
+                            {{ form_widget(f.send , { 'attr': {'class': 'btn btn-primary d-grid w-100' }}) }}
+
+                            {{ form_end(f)}}
+
+                          <div class="text-center">
+                            <a href="/login" class="d-flex align-items-center justify-content-center">
+                                <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                                Back to login
+                            </a>
+                         </div>
+                    </div>
+            </div>
+            <!-- /Forgot Password -->
+
+{% endblock %}

@@ -1,90 +1,165 @@
-
-
 {% extends 'base.html.twig' %}
 
 {% block title %} {% endblock %}
 
 {% block body %}
-
-    <section class="vh-100 bg-image"
-             style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
-        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-            <div class="container h-100">
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                        <div class="card" style="border-radius: 15px;">
-                            <div class="card-body p-5">
-                                <h2 class="text-uppercase text-center mb-5">Create an account</h2>
-                                <div class="row">
-                                    <div class="col">
-                                        {{ form_start(formE ,{'attr': {'novalidate': 'novalidate'}}) }}
-                                        <div class="form-outline mb-4">
-                                            {{ form_errors(formE.nom) }}
-                                            {{ form_widget(formE.nom, { 'attr': {'style': 'width: 250px'} })}}
-                                        </div>
-
-                                        <div class="form-outline mb-4">
-                                            {{ form_errors(formE.prenom) }}
-                                            {{ form_widget(formE.prenom, { 'attr': {'style': 'width: 250px'} }) }}
-
-                                        </div>
-
-                                        <div class="form-outline mb-4">
-                                            {{ form_errors(formE.email) }}
-                                            {{ form_widget(formE.email, { 'attr': {'style': 'width: 250px'} }) }}
-                                        </div>
-                                        <div class="form-outline mb-4">
-                                            {{ form_errors(formE.passwd) }}
-                                            {{ form_widget(formE.passwd, { 'attr': {'style': 'width: 250px'} }) }}
-                                        </div>
-
-                                        <div class="form-outline mb-4">
-
-                                            {{ form_errors(formE.adresse) }}
-                                            {{ form_widget(formE.adresse , { 'attr': {'style': 'width: 250px'} }) }}
-
-                                        </div>
-
-                                        <div class="form-outline mb-4">
-                                            {{ form_errors(formE.bio) }}
-                                            {{ form_widget(formE.bio , { 'attr': {'style': 'width: 250px'} }) }}
-                                        </div>
-
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-outline mb-4">
-                                            {{ form_errors(formE.certification) }}
-                                            {{ form_widget(formE.certification , { 'attr': {'style': 'width: 250px'} }) }}
-                                        </div>
-                                        <div class="form-outline mb-4">
-                                            {{ form_errors(formE.img) }}
-                                            {{ form_widget(formE.img , { 'attr': {'style': 'width: 250px'} }) }}
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="d-flex justify-content-center">
-
-                                    {{ form_widget(formE.Registre, { 'attr': {'class': 'btn btn-success btn-block btn-lg gradient-custom-4 text-body'}}) }}
-
-                                </div>
-                                <div class="d-flex justify-content-center">
-
-                                    {{ form_widget(formE.Cancel, { 'attr': {'class': 'btn btn-danger btn-block btn-lg gradient-custom-4 text-body'}}) }}
-
-                                </div>
-                                {{ form_end(formE) }}
-                                <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
-                                                                                                        class="fw-bold text-body"><u>Login
-                                            here</u></a></p>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="card">
+        <div class="card-body">
+            <!-- Logo -->
+            <div class="app-brand justify-content-center">
+                <a href="/" class="app-brand-link gap-2">
+                    <img src="{{ asset('images/SAHTI without bg.png') }} " height="150px" width="100%" />
+                </a>
             </div>
+            <!-- /Logo -->
+            <div class="text-center">
+                <img src="{{ asset('images/coach.png') }} "  height="90px" width="30%" />
+                 <h4 class="mb-2">Adventure starts here 🚀</h4>
+                 <p class="mb-4">Start your journey as one of our trainers </p>
+            </div>
+            {{ form_start(formE, {'attr': {'novalidate':'novalidate'}}) }}
+
+            <div class="mb-3">
+                {{ form_widget(formE.nom, { 'attr': {'class': 'form-control','style': 'width: 350px'} })}}
+                {{ form_errors(formE.nom) }}
+
+            </div>
+            <div class="mb-3">
+                {{ form_widget(formE.prenom, { 'attr': {'class': 'form-control','style': 'width: 350px'} }) }}
+                {{ form_errors(formE.prenom) }}
+
+            </div>
+            <div class="mb-3">
+                {{ form_widget(formE.email, { 'attr': {'class': 'form-control','style': 'width: 350px'} }) }}
+                {{ form_errors(formE.email) }}
+
+            </div>
+            <div class="mb-3 form-password-toggle">
+                <div class="input-group input-group-merge">
+                    {{ form_widget(formE.passwd, { 'attr': {'class': 'form-control'} }) }}
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                </div>
+                {{ form_errors(formE.passwd) }}
+
+            </div>
+            <div class="mb-3">
+                {{ form_widget(formE.adresse , { 'attr': {'class': 'form-control','style': 'width: 350px'} }) }}
+                {{ form_errors(formE.adresse) }}
+
+            </div>
+            <div class="mb-3">
+                {{ form_widget(formE.bio , { 'attr': {'class': 'form-control','style': 'width: 350px'} }) }}
+                {{ form_errors(formE.bio) }}
+
+            </div>
+            <div class="mb-3">
+                {{ form_widget(formE.certification , { 'attr': {'class': 'form-control','style': 'width: 350px'} }) }}
+                {{ form_errors(formE.certification) }}
+
+            </div>
+            <div class="mb-3">
+                {#                class="form-control"#}
+                <label class="form-label" >Profile Picture</label>
+                {{ form_widget(formE.imgFile , { 'attr': {'class': 'form-control'} }) }}
+                {{ form_errors(formE.imgFile) }}
+
+            </div>
+            {{ form_widget(formE.Registre, { 'attr': {'class': 'btn btn-primary d-grid w-100'}}) }}
+            {{ form_widget(formE.Cancel, { 'attr': {'class': 'btn btn-danger d-grid w-100'}}) }}
+            {{ form_end(formE) }}
+
+
+            <p class="text-center">
+                <span>Already have an account?</span>
+                <a href="/login">
+                    <span>Sign in instead</span>
+                </a><br>
+                <a href="/signupin">
+                    <span>Create an another type of account</span>
+                </a>
+            </p>
         </div>
-    </section>
+    </div>
+
+{#    <section class="vh-100 bg-image"#}
+{#             style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">#}
+{#        <div class="mask d-flex align-items-center h-100 gradient-custom-3">#}
+{#            <div class="container h-100">#}
+{#                <div class="row d-flex justify-content-center align-items-center h-100">#}
+{#                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">#}
+{#                        <div class="card" style="border-radius: 15px;">#}
+{#                            <div class="card-body p-5">#}
+{#                                <h2 class="text-uppercase text-center mb-5">Create an account</h2>#}
+{#                                <div class="row">#}
+{#                                    <div class="col">#}
+{#                                        {{ form_start(formE) }}#}
+{#                                        <div class="form-outline mb-4">#}
+{#                                            {{ form_errors(formE.nom) }}#}
+{#                                            {{ form_widget(formE.nom, { 'attr': {'style': 'width: 250px'} })}}#}
+{#                                        </div>#}
+
+{#                                        <div class="form-outline mb-4">#}
+{#                                            {{ form_errors(formE.prenom) }}#}
+{#                                            {{ form_widget(formE.prenom, { 'attr': {'style': 'width: 250px'} }) }}#}
+
+{#                                        </div>#}
+
+{#                                        <div class="form-outline mb-4">#}
+{#                                            {{ form_errors(formE.email) }}#}
+{#                                            {{ form_widget(formE.email, { 'attr': {'style': 'width: 250px'} }) }}#}
+{#                                        </div>#}
+{#                                        <div class="form-outline mb-4">#}
+{#                                            {{ form_errors(formE.passwd) }}#}
+{#                                            {{ form_widget(formE.passwd, { 'attr': {'style': 'width: 250px'} }) }}#}
+{#                                        </div>#}
+
+{#                                        <div class="form-outline mb-4">#}
+
+{#                                            {{ form_errors(formE.adresse) }}#}
+{#                                            {{ form_widget(formE.adresse , { 'attr': {'style': 'width: 250px'} }) }}#}
+
+{#                                        </div>#}
+
+{#                                        <div class="form-outline mb-4">#}
+{#                                            {{ form_errors(formE.bio) }}#}
+{#                                            {{ form_widget(formE.bio , { 'attr': {'style': 'width: 250px'} }) }}#}
+{#                                        </div>#}
+
+{#                                    </div>#}
+{#                                    <div class="col">#}
+{#                                        <div class="form-outline mb-4">#}
+{#                                            {{ form_errors(formE.certification) }}#}
+{#                                            {{ form_widget(formE.certification , { 'attr': {'style': 'width: 250px'} }) }}#}
+{#                                        </div>#}
+{#                                        <div class="form-outline mb-4">#}
+{#                                            {{ form_errors(formE.img) }}#}
+{#                                            {{ form_widget(formE.img , { 'attr': {'style': 'width: 250px'} }) }}#}
+{#                                        </div>#}
+
+{#                                    </div>#}
+{#                                </div>#}
+
+{#                                <div class="d-flex justify-content-center">#}
+
+{#                                    {{ form_widget(formE.Registre, { 'attr': {'class': 'btn btn-success btn-block btn-lg gradient-custom-4 text-body'}}) }}#}
+
+{#                                </div>#}
+{#                                <div class="d-flex justify-content-center">#}
+
+{#                                    {{ form_widget(formE.Cancel, { 'attr': {'class': 'btn btn-danger btn-block btn-lg gradient-custom-4 text-body'}}) }}#}
+
+{#                                </div>#}
+{#                                {{ form_end(formE) }}#}
+{#                                <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"#}
+{#                                                                                                        class="fw-bold text-body"><u>Login#}
+{#                                            here</u></a></p>#}
+
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
 {% endblock %}
 

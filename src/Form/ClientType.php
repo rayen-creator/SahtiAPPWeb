@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Client;
 use phpDocumentor\Reflection\Types\Null_;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -24,10 +26,10 @@ class ClientType extends AbstractType
         $builder
             ->add('nom', TextType::class, array(
                 'attr' => array(
-                    'placeholder' => 'Name')))
+                    'placeholder' => 'LastName')))
             ->add('prenom', TextType::class, array(
                 'attr' => array(
-                    'placeholder' => 'Prenom')))
+                    'placeholder' => 'FirstName')))
             ->add('email', EmailType::class, array(
                 'attr' => array(
                     'placeholder' => 'Email')))
@@ -36,16 +38,18 @@ class ClientType extends AbstractType
                     'placeholder' => 'Password')))
             ->add('adresse', TextType::class,array(
                 'attr' => array(
-                    'placeholder' => 'Adresse')))
-//            ->add('datenaiss', DateTime::class , [
+                    'placeholder' => 'Address')))
+//            ->add('datenaiss', DateTimeType::class , [
 //                'widget' => 'single_text',
-//                'format' => 'MM-dd-yyyy',
+//
 //            ])
-            ->add('datenaiss', TextType::class, array(
-                'attr' => array(
-                        'placeholder' => 'aaa-mm-jj',
-            )))
-            ->add('img',FileType::class,['mapped'=>false,'required' => false])
+//            ->add('datenaiss', null, array(
+//                'attr' => array(
+//
+//                'widget' => 'single_text',
+//            )))
+            ->add('date', DateType::class, ['mapped'=>false, 'widget' => 'single_text',] )
+            ->add('imgFile',FileType::class,['mapped'=>false,'required' => false])
             ->add('Registre', SubmitType::class)
             ->add('Cancel', ResetType::class)
 

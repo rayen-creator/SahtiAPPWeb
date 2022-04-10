@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Entraineur
@@ -25,6 +26,7 @@ class Entraineur
      * @var string|null
      *
      * @ORM\Column(name="nom", type="string", length=30, nullable=true)
+     * @Assert\NotBlank(message="Must be filled")
      */
     private $nom;
 
@@ -32,6 +34,7 @@ class Entraineur
      * @var string|null
      *
      * @ORM\Column(name="prenom", type="string", length=30, nullable=true)
+     * @Assert\NotBlank(message="Must be filled")
      */
     private $prenom;
 
@@ -39,6 +42,10 @@ class Entraineur
      * @var string|null
      *
      * @ORM\Column(name="email", type="string", length=30, nullable=true)
+     * @Assert\NotBlank(message="Must be filled")
+     *  @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
      */
     private $email;
 
@@ -46,6 +53,17 @@ class Entraineur
      * @var string|null
      *
      * @ORM\Column(name="passwd", type="string", length=50, nullable=true)
+     * @Assert\NotBlank(message="Must be filled")
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 20,
+     *      minMessage = "Address must be at least {{ limit }} characters long",
+     *      maxMessage = "Address cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^(?=.*[a-z])(?=.*\d).{8,}$/i",
+     *     message="Password is required to be minimum 8 chars in length and to include at least one letter and one number."
+     * )
      */
     private $passwd;
 
@@ -53,6 +71,13 @@ class Entraineur
      * @var string|null
      *
      * @ORM\Column(name="adresse", type="string", length=30, nullable=true)
+     * @Assert\NotBlank(message="Must be filled")
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 20,
+     *      minMessage = "Address must be at least {{ limit }} characters long",
+     *      maxMessage = "Address cannot be longer than {{ limit }} characters"
+     * )
      */
     private $adresse;
 
@@ -60,6 +85,13 @@ class Entraineur
      * @var string|null
      *
      * @ORM\Column(name="bio", type="string", length=30, nullable=true)
+     * @Assert\NotBlank(message="Must be filled")
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 255,
+     *      minMessage = "Bio must be at least {{ limit }} characters long",
+     *      maxMessage = "Bio cannot be longer than {{ limit }} characters"
+     * )
      */
     private $bio;
 
@@ -67,6 +99,13 @@ class Entraineur
      * @var string|null
      *
      * @ORM\Column(name="certification", type="string", length=30, nullable=true)
+     * @Assert\NotBlank(message="Must be filled")
+     *  @Assert\Length(
+     *      min = 8,
+     *      max = 255,
+     *      minMessage = "Certification must be at least {{ limit }} characters long",
+     *      maxMessage = "Certification cannot be longer than {{ limit }} characters"
+     * )
      */
     private $certification;
 

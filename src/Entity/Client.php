@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Client
  *
  * @ORM\Table(name="client", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"})}, indexes={@ORM\Index(name="id_coach", columns={"id_coach"}), @ORM\Index(name="id_nutri", columns={"id_nutri"})})
  * @ORM\Entity
+
  */
 class Client
 {
@@ -25,6 +27,8 @@ class Client
      * @var string|null
      *
      * @ORM\Column(name="nom", type="string", length=30, nullable=true)
+     * @Assert\Type("string")
+     *  @Assert\NotBlank(message="Must be filled")
      */
     private $nom;
 
@@ -32,6 +36,8 @@ class Client
      * @var string|null
      *
      * @ORM\Column(name="prenom", type="string", length=30, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\NotBlank(message="Must be filled")
      */
     private $prenom;
 
@@ -39,6 +45,10 @@ class Client
      * @var string|null
      *
      * @ORM\Column(name="email", type="string", length=30, nullable=true)
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
+     *  @Assert\NotBlank(message="Must be filled")
      */
     private $email;
 
@@ -46,6 +56,17 @@ class Client
      * @var string|null
      *
      * @ORM\Column(name="passwd", type="string", length=100, nullable=true)
+     * @Assert\NotBlank(message="Must be filled")
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 20,
+     *      minMessage = "Password must be at least {{ limit }} characters long",
+     *      maxMessage = "Password cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^(?=.*[a-z])(?=.*\d).{8,}$/i",
+     *     message="Password is required to be minimum 8 chars in length and to include at least one letter and one number."
+     * )
      */
     private $passwd;
 
@@ -53,6 +74,14 @@ class Client
      * @var string|null
      *
      * @ORM\Column(name="adresse", type="string", length=30, nullable=true)
+     * @Assert\NotBlank(message="Must be filled")
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 20,
+     *      minMessage = "Address must be at least {{ limit }} characters long",
+     *      maxMessage = "Address cannot be longer than {{ limit }} characters"
+     * )
      */
     private $adresse;
 
@@ -60,6 +89,7 @@ class Client
      * @var string|null
      *
      * @ORM\Column(name="datenaiss", type="string", length=30, nullable=true)
+     *
      */
     private $datenaiss;
 
@@ -74,6 +104,7 @@ class Client
      * @var bool|null
      *
      * @ORM\Column(name="IsBlocked", type="boolean", nullable=true)
+
      */
     private $isblocked = '0';
 
