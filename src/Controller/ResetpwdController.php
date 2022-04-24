@@ -112,12 +112,8 @@ class ResetpwdController extends AbstractController
                     'Email does not exists ! '
                 );
             }
-
-
         }
-
         return $this->render('resetpwd/reset.html.twig', ['f' => $form->createView()]);
-
     }
 
     function randomPassword()

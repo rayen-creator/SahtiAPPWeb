@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Client;
+use Captcha\Bundle\CaptchaBundle\Form\Type\CaptchaType;
 use phpDocumentor\Reflection\Types\Null_;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
@@ -36,6 +37,9 @@ class ClientType extends AbstractType
             ->add('passwd', PasswordType::class, array(
                 'attr' => array(
                     'placeholder' => 'Password')))
+            ->add('confirmpwd', PasswordType::class,
+                ['mapped'=>false ,
+                'attr' => ['placeholder' => 'Confirm Password']])
             ->add('adresse', TextType::class,array(
                 'attr' => array(
                     'placeholder' => 'Address')))
@@ -48,6 +52,9 @@ class ClientType extends AbstractType
 //
 //                'widget' => 'single_text',
 //            )))
+            ->add('captchaCode', CaptchaType::class, array(
+                    'captchaConfig' => 'ExampleCaptcha'
+                ))
             ->add('date', DateType::class, ['mapped'=>false, 'widget' => 'single_text',] )
             ->add('imgFile',FileType::class,['mapped'=>false,'required' => false])
             ->add('Registre', SubmitType::class)

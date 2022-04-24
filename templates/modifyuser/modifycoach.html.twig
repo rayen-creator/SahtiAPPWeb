@@ -78,10 +78,9 @@
                                 </div>
                             {% endfor %}
                         </div>
+                        {{ form_widget(f.Save , { 'attr': {'class': 'btn btn-primary ' }}) }}
+                        {{ form_end(f)}}
                     </div>
-
-                    {{ form_widget(f.Save , { 'attr': {'class': 'btn btn-primary ' }}) }}
-                    {{ form_end(f)}}
                 </div>
             </div>
             <div class="col-xl">

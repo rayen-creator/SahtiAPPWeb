@@ -10,8 +10,8 @@
 
                 <div class="collapse navbar-collapse" id="navbar-ex-2">
                     <div class="navbar-nav me-auto">
-                        <a class="nav-item nav-link " href="/listavailablecoach">List Coach</a>
-                        <a class="nav-item nav-link active" href="/listavailablenutri">List Nutritionist</a>
+                        <a class="nav-item nav-link " href="/profile/listavailablecoach">List Coach</a>
+                        <a class="nav-item nav-link active" href="/profile/listavailablenutri">List Nutritionist</a>
                     </div>
 
                     <span class="navbar-text"></span>
@@ -19,6 +19,11 @@
             </div>
         </nav>
         <h5 class="card-header">Available Nutritionist's list</h5>
+        {% for flashMessage in app.session.flashbag.get('msg') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>
@@ -33,24 +38,21 @@
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                <tr {% for i in listeN %} >
+                <tr {% for i in donneeN %} >
                     {% if i.IsBlocked == false %}
                         <td>{{ i.prenom }}</td>
                         <td>{{ i.nom }}</td>
                         <td>{{ i.adresse }}</td>
                         <td>{{ i.bio }}</td>
                         <td>{{ i.certification }}</td>
-                    {% else %}
-
+                        <td>
+                            <a href="{{ path ('addnutri',{'id' :i.id}) }}" class="btn btn-success" onclick="return confirm('Are you sure you want to add this nutritionist ?')"/> Work with</a>
+                        </td>
                     {% endif %}
-
-                    <td>
-                        <a href="{{ path ('addnutri',{'id' :i.id}) }}" class="btn btn-success" onclick="return confirm('Are you sure you want to add this nutritionist ?')"/> Work with</a>
-
-                    </td>
                 </tr {% endfor %} >
                 </tbody>
             </table>
+            {{ knp_pagination_render(donneeN) }}
         </div>
     </div>
 {% endblock %}

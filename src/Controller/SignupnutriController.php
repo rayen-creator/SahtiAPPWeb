@@ -34,24 +34,41 @@ class SignupnutriController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $pwd=$form->get('passwd')->getData();
             $image = $form->get('imgFile')->getData();
-            $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+            $confirmpwd = $form->get('confirmpwd')->getData();
 
-            $fichier = $originalFilename.md5(uniqid()).'.'.$image->guessExtension();
-            $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
+            if ($pwd != $confirmpwd) {
+                $this->get('session')->getFlashBag()->add(
+                    'alert',
+                    'Password mismatch ! '
+                );
+            } else if ($image == null) {
+                $this->get('session')->getFlashBag()->add(
+                    'alert2',
+                    'Image must be added  ! '
+                );
+            }else{
 
-            // On copie le fichier dans le dossier uploads
-            $image->move(
-                $destination ,
-                $fichier
-            );
-            $nutritioniste->setImg($fichier);
+                $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($nutritioniste);
-            //execute query DB
-            $em->flush();
-            return $this->redirectToRoute('app_login');
+                $fichier = $originalFilename.md5(uniqid()).'.'.$image->guessExtension();
+                $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $destination ,
+                    $fichier
+                );
+                $nutritioniste->setImg($fichier);
+                $nutritioniste->setPasswd(md5($pwd));
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($nutritioniste);
+                //execute query DB
+                $em->flush();
+                return $this->redirectToRoute('app_login');
+            }
+
         }
         return $this->render('signupnutri/registre.html.twig', ['formN' => $form->createView()]);
 

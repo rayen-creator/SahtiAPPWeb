@@ -1,14 +1,50 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        #        FOS\UserBundle\Model\UserInterface: md5
+        App\Entity\Admin:
+            algorithm: auto
+        App\Entity\Client:
+            algorithm: auto
+
+
     providers:
-        users_in_memory: { memory: null }
+
+        user_admin:
+            entity: { class: App\Entity\Admin, property: email }
+        user_client:
+            entity: { class: App\Entity\Client, property: email }
+        #        user_coach:
+        #            entity: { class: App\Entity\Entraineur, property: email }
+        #        user_nutri:
+        #            entity: { class: App\Entity\Nutritioniste, property: email }
+        #        users_in_memory: { memory: null }
+        chain_provider:
+            chain:
+                providers: [ user_admin,user_client]
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            access_denied_handler: App\Security\AccessDeniedHandler
+#            access_denied_handler: /about
+
+            entry_point: App\Security\AuthenticationEntryPoint
             anonymous: lazy
-            provider: users_in_memory
+            provider: chain_provider
+            form_login:
+                login_path: login
+                check_path: login
+            guard:
+                authenticators:
+                    - App\Security\LoginFromAuthenticator
+
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
+            user_checker: App\Security\UserChecker
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -19,5 +55,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+     - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+     - { path: ^/adminpanel, roles: ROLE_ADMIN }
+     - { path: ^/profile, roles: ROLE_USER }

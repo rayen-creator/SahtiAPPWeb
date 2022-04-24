@@ -34,32 +34,51 @@ class SignupclientController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $date = $form->get('date')->getData();
-            $stringdate=$date->format('Y-m-d');
-            $client->setDatenaiss($stringdate);
-
             $image = $form->get('imgFile')->getData();
-            $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-
-            $fichier = $originalFilename.md5(uniqid()).'.'.$image->guessExtension();
-            $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
-
-            // On copie le fichier dans le dossier uploads
-            $image->move(
-                $destination ,
-                $fichier
-            );
-            $client->setImg($fichier);
-
             $pwd=$form->get('passwd')->getData();
-            $client->setPasswd(md5($pwd));
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($client);
-            //execute query DB
-            $em->flush();
-            return $this->redirectToRoute('app_login');
+            $confirmpwd=$form->get('confirmpwd')->getData();
+
+            if  ($pwd != $confirmpwd) {
+                $this->get('session')->getFlashBag()->add(
+                    'alert',
+                    'Password mismatch ! '
+                );
+            }else if ($date == null ){
+                $this->get('session')->getFlashBag()->add(
+                    'alert2',
+                    'Date must be added  ! '
+                );
+            }else if ($image == null ){
+                $this->get('session')->getFlashBag()->add(
+                    'alert3',
+                    'Image must be added  ! '
+                );
+            }else {
+                $stringdate=$date->format('Y-m-d');
+                $client->setDatenaiss($stringdate);
+                //******
+                $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+
+                $fichier = $originalFilename.md5(uniqid()).'.'.$image->guessExtension();
+                $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $destination ,
+                    $fichier
+                );
+                $client->setImg($fichier);
+                ///*****
+                $client->setPasswd(md5($pwd));
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($client);
+                //execute query DB
+                $em->flush();
+                return $this->redirectToRoute('app_login');
+            }
+
         }
             return $this->render('signupclient/registre.html.twig', ['formC' => $form->createView()]);
-
     }
 
 }

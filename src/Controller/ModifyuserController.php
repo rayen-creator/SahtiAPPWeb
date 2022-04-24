@@ -20,11 +20,26 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ModifyuserController extends AbstractController
 {
+
+    /**
+     * @Route("/profile", name="app_profile")
+     */
+    public function index(ClientRepository $usrRep): Response
+    {
+        $user=$this->getUser()->getUsername();
+        $currentuser=$usrRep->findOneBy(array('email'=>$user));
+        return $this->render('modifyuser/indexclient.html.twig', [
+            'client' => $currentuser,
+        ]);
+    }
+
+
+
     /**
      * @return Response
-     * @Route("/modifyclient", name="modifyclient")
+     * @Route("/modifyclient/{id}", name="modifyclient")
      */
-    public function modifyclient(Request $request , ClientRepository $em)
+    public function modifyclient($id,Request $request , ClientRepository $em  )
     {
         $form = $this->createFormBuilder()
             ->add('nom', TextType::class, array(
@@ -51,7 +66,7 @@ class ModifyuserController extends AbstractController
             $confirmpwd = $form->get('confirmpasswd')->getData();
             $image = $form->get('img')->getData();
 
-        $foundC= $this -> getDoctrine() -> getRepository(Client::class)->find(41);
+        $foundC= $this -> getDoctrine() -> getRepository(Client::class)->find($id);
         if ($form->isSubmitted() && $form->isValid()) {
          if  ( ( $LastName != null )|| ($FirstName != null) || ($confirmpwd != null) || ($image != null) ) {
 
@@ -62,7 +77,6 @@ class ModifyuserController extends AbstractController
                     'alert1',
                     'LastName updated successfully ! '
                 );
-                return $this->redirectToRoute('modifyclient');
 
             }
             if ($FirstName != null) {

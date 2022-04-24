@@ -19,6 +19,18 @@ class NutritionisteRepository extends ServiceEntityRepository
         parent::__construct($registry, Nutritioniste::class);
     }
 
+
+    public function findPlanBySujet($sujet){
+        return $this->createQueryBuilder('Nutritioniste')
+            ->andWhere('Nutritioniste.nom LIKE :sujet or Nutritioniste.prenom LIKE :sujet  ')
+            ->setParameter('sujet', '%'.$sujet.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+//*********************************************************************
+
     public function updateimg($id,$param){
         $query=$this->getEntityManager()
             ->createQuery('update APP\Entity\nutritioniste n set n.img=:img where n.id=:id')

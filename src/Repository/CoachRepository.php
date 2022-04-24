@@ -20,6 +20,16 @@ class CoachRepository extends ServiceEntityRepository
     }
 
 
+
+
+    public function findPlanBySujet($sujet){
+        return $this->createQueryBuilder('Entraineur')
+            ->andWhere('Entraineur.nom LIKE :sujet or Entraineur.prenom LIKE :sujet  ')
+            ->setParameter('sujet', '%'.$sujet.'%')
+            ->getQuery()
+            ->getResult();
+    }
+    //***********************************
     public function updateimg($id,$param){
         $query=$this->getEntityManager()
             ->createQuery('update APP\Entity\entraineur e set e.img=:img where e.id=:id')

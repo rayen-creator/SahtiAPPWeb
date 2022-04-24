@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Nutritioniste;
+use Captcha\Bundle\CaptchaBundle\Form\Type\CaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -31,6 +32,9 @@ class NutritionisteType extends AbstractType
             ->add('passwd', PasswordType::class,array(
                 'attr' => array(
                     'placeholder' => 'Password')))
+            ->add('confirmpwd', PasswordType::class,
+                ['mapped'=>false ,
+                    'attr' => ['placeholder' => 'Confirm Password']])
             ->add('adresse', TextType::class, array(
                 'attr' => array(
                     'placeholder' => 'Address')))
@@ -40,6 +44,9 @@ class NutritionisteType extends AbstractType
             ->add('certification', TextareaType::class , array(
                 'attr' => array(
                     'placeholder' => 'Certification')))
+            ->add('captchaCode', CaptchaType::class, array(
+                'captchaConfig' => 'ExampleCaptcha'
+            ))
             ->add('imgFile',FileType::class,['mapped'=>false,'required' => false])
             ->add('Registre', SubmitType::class)
             ->add('Cancel', ResetType::class);

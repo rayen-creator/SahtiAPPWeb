@@ -19,6 +19,40 @@ class ClientRepository extends ServiceEntityRepository
         parent::__construct($registry, Client::class);
     }
 
+
+
+
+    /**
+     * @return Client[]
+     */
+    public function findPlanBySujet($sujet){
+        return $this->createQueryBuilder('Client')
+            ->andWhere('Client.adresse LIKE :sujet or Client.prenom LIKE :sujet  ')
+            ->setParameter('sujet', '%'.$sujet.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    //*************************
+
+    public function addcoach($id,$email){
+        $query=$this->getEntityManager()
+            ->createQuery('update APP\Entity\client c set c.idCoach=:idCoach where c.email=:email')
+            ->setParameter('idCoach',$id)
+            ->setParameter('email',$email);
+        return $query->getResult();
+    }
+
+    public function addnutri($id,$email){
+        $query=$this->getEntityManager()
+            ->createQuery('update APP\Entity\client c set c.idNutri=:idNutri where c.email=:email')
+            ->setParameter('idNutri',$id)
+            ->setParameter('email',$email);
+        return $query->getResult();
+    }
+
+    //*************************************************************
+
     public function searchimg($param){
         $query=$this->getEntityManager()
             ->createQuery('select c.img from APP\Entity\client c where c.id=:id')

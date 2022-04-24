@@ -23,6 +23,10 @@
 {#                        <small class="text-muted float-end">Default label</small>#}
                     </div>
                     <div class="card-body">
+                        <div class="text-center">
+                            <a href="/profile" class="btn btn-info"> Go back </a><br>
+
+                        </div>
                         {% for flashMessage in app.session.flashbag.get('alert5') %}
                             <div class="alert alert-danger">
                                 {{ flashMessage }}

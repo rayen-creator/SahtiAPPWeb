@@ -1,0 +1,50 @@
+{% extends 'base-back.html.twig' %}
+{% block title %}{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-xl">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                {#                        <h5 class="mb-0">Edit your account</h5>#}
+                {#                        <small class="text-muted float-end">Default label</small>#}
+                <h1>My Profile</h1>
+
+            </div>
+            <div class="card-body">
+    <table class="table" >
+        <tbody id="tableac" name="tableac">
+        <tr>
+            <th>Profile Picture</th>
+            <td> <img class="avatar border-gray"  src="{{ asset('uploads/' ~  client.img ) }}" height="400px" width="400px" ></td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>{{ client.nom }}</td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td>{{ client.prenom }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ client.email }}</td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td>{{ client.adresse }}</td>
+        </tr>
+        <tr>
+            <th>Birthday</th>
+            <td>{{ client.datenaiss  }}</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <a href="{{ path('modifyclient', {'id': client.id}) }}" class="btn btn-primary"> Edit Account</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

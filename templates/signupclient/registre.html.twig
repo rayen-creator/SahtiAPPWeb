@@ -22,51 +22,90 @@
             </div>
             {{ form_start(formC , {'attr': {'novalidate':'novalidate'}}) }}
                 <div class="mb-3">
-                    {{ form_widget(formC.nom, { 'attr': {'class': 'form-control','style': 'width: 350px'} })}}
+
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text"><i class='bx bxs-user'></i></span>
+                    {{ form_widget(formC.nom, { 'attr': {'class': 'form-control'} })}}
+                    </div>
                     {{ form_errors(formC.nom ) }}
 
                 </div>
                 <div class="mb-3">
-                    {{ form_widget(formC.prenom, { 'attr': {'class': 'form-control','style': 'width: 350px'} }) }}
+
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text"><i class='bx bxs-user'></i></span>
+                    {{ form_widget(formC.prenom, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
                     {{ form_errors(formC.prenom) }}
 
                 </div>
                 <div class="mb-3">
-                    {{ form_widget(formC.email, { 'attr': {'class': 'form-control','style': 'width: 350px'} }) }}
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                    {{ form_widget(formC.email, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
                     {{ form_errors(formC.email) }}
 
                 </div>
                 <div class="mb-3 form-password-toggle">
                     <div class="input-group input-group-merge">
-
+                        <span class="input-group-text"><i class='bx bxs-key'></i></span>
                         {{ form_widget(formC.passwd, { 'attr': {'class': 'form-control'} }) }}
                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                     </div>
                     {{ form_errors(formC.passwd) }}
-
                 </div>
-                <div class="mb-3">
-                    {{ form_widget(formC.adresse , { 'attr': {'class': 'form-control','style': 'width: 350px'} }) }}
-                    {{ form_errors(formC.adresse) }}
+            <div class="mb-3 form-password-toggle">
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text"><i class='bx bxs-key'></i></span>
+                    {{ form_widget(formC.confirmpwd, { 'attr': {'class': 'form-control'} }) }}
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                </div>
+                {% for flashMessage in app.session.flashbag.get('alert') %}
+                    <div class="alert alert-danger">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            </div>
 
+                <div class="mb-3">
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text"><i class='bx bxs-home'></i></span>
+                    {{ form_widget(formC.adresse , { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    {{ form_errors(formC.adresse) }}
                 </div>
                  <div class="mb-3">
+                     <i class='bx bxs-calendar'></i>
                      <label class="form-label" >Date of birth</label>
                     {{ form_widget(formC.date , { 'attr': {'class': 'form-control','style': 'width: 350px'} }) }}
                      {{ form_errors(formC.date) }}
+                     {% for flashMessage in app.session.flashbag.get('alert2') %}
+                         <div class="alert alert-danger">
+                             {{ flashMessage }}
+                         </div>
+                     {% endfor %}
                  </div>
                  <div class="mb-3">
 {#                class="form-control"#}
-                     <label class="form-label" >Profile Picture</label>
+                     <i class='bx bxs-image-add' ></i><label class="form-label" >Profile Picture</label>
                      {{ form_widget(formC.imgFile , { 'attr': {'class': 'form-control'} }) }}
                      {{ form_errors(formC.imgFile) }}
-
+                     {% for flashMessage in app.session.flashbag.get('alert3') %}
+                         <div class="alert alert-danger">
+                             {{ flashMessage }}
+                         </div>
+                     {% endfor %}
                  </div>
+            <div class="mb-3">
+                {#                class="form-control"#}
+                <i class='bx bx-captions'></i> <label class="form-label" >Captcha Code</label>
+                {{ form_widget(formC.captchaCode ) }}
+                {{ form_errors(formC.captchaCode) }}
+            </div>
             {{ form_widget(formC.Registre, { 'attr': {'class': 'btn btn-primary d-grid w-100'}}) }}
             {{ form_widget(formC.Cancel, { 'attr': {'class': 'btn btn-danger d-grid w-100'}}) }}
             {{ form_end(formC) }}
-
-
             <p class="text-center">
                 <span>Already have an account?</span>
                 <a href="/login">
@@ -78,11 +117,9 @@
             </p>
             <p class="text-center">
 {#                <span>New on our platform?</span>#}
-
             </p>
         </div>
     </div>
     <!-- Register Card -->
-
 {% endblock %}
 

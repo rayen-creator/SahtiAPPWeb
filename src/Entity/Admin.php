@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Admin
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="admin", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"})})
  * @ORM\Entity
  */
-class Admin
+class Admin implements  UserInterface
 {
     /**
      * @var int
@@ -48,6 +49,7 @@ class Admin
      * @ORM\Column(name="passwd", type="string", length=100, nullable=true)
      */
     private $passwd;
+
 
     public function getId(): ?int
     {
@@ -103,4 +105,34 @@ class Admin
     }
 
 
+    public function getRoles()
+    {
+        // TODO: Implement getRoles() method.
+        $roles[] = 'ROLE_ADMIN';
+
+        return array_unique($roles);
+    }
+
+    public function getPassword()
+    {
+        // TODO: Implement getPassword() method.
+        return $this->passwd;
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function getUsername()
+    {
+        // TODO: Implement getUsername() method.
+        return $this->email;
+
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
 }

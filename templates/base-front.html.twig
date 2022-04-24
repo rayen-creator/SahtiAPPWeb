@@ -70,16 +70,16 @@
 </head>
 
     {#    header#}
-    <div id="fh5co-wrapper">
+    <div id="fh5co-wrapper" >
         <div id="fh5co-page">
-            <div id="fh5co-header">
-                <header id="fh5co-header-section">
-                    <div class="container">
-                        <div class="nav-header">
+            <div id="fh5co-header" >
+                <header id="fh5co-header-section" style="background-color: #222831;">
+                    <div class="container" >
+                        <div class="nav-header" >
                             <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
                             <h1 id="fh5co-logo"><a href="/">SAH<span>TI</span></a></h1>
                             <!-- START #fh5co-menu-wrap -->
-                            <nav id="fh5co-menu-wrap" role="navigation">
+                            <nav id="fh5co-menu-wrap" role="navigation" >
                                 <ul class="sf-menu" id="fh5co-primary-menu">
                                     <li class="active">
                                         <a href="/">Home</a>
@@ -111,35 +111,34 @@
                                     <li><a href="">Trainers</a></li>
                                     <li><a href="/about">About</a></li>
                                     <li><a href="">Contact</a></li>
-                                    <li>
-                                        <a href="/login" class="btn btn-primary">
-                                            Login
-                                        </a>
-                                    </li>
+                                    {% if app.user %}
+                                        <li>
+                                            {% if app.user.username =="Admin@sahti.com" %}
+                                            <a href="/adminpanel" class="btn btn-success"> {{ app.user.username }}</a>
+                                            {% else %}
+                                            <a href="/profile" class="btn btn-success"> {{ app.user.username }}</a>
+                                            {% endif %}
 
-
+                                        </li>
+                                        <li>
+                                            <a href="/logout" class="btn btn-danger">
+                                                Logout
+                                            </a>
+                                        </li>
+                                    {% else %}
+                                        <li>
+                                            <a href="/login" class="btn btn-success">
+                                                Login
+                                            </a>
+                                        </li>
+                                    {% endif %}
                                 </ul>
                             </nav>
                         </div>
                     </div>
                 </header>
             </div>
-            <div class="fh5co-hero">
-                <div class="fh5co-overlay"></div>
-                <div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/home-image.jpg);">
-                    <div class="desc animate-box">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-7">
-                                    <h2>Fitness &amp; Health <br>is a <b>Mentality</b></h2>
-                                    {#                                        <p><span>Created with <i class="icon-heart3"></i> by the fine folks at <a href="http://freehtml5.co" class="fh5co-site-name">FreeHTML5.co</a></span></p>#}
-                                    <span><a class="btn btn-primary" href="/signupin">Start Your Journey</a></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- end:fh5co-header -->
             {% block body %}

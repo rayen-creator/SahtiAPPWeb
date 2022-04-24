@@ -20,49 +20,92 @@
             {{ form_start(formE, {'attr': {'novalidate':'novalidate'}}) }}
 
             <div class="mb-3">
-                {{ form_widget(formE.nom, { 'attr': {'class': 'form-control','style': 'width: 350px'} })}}
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text"><i class='bx bxs-user'></i></span>
+                {{ form_widget(formE.nom, { 'attr': {'class': 'form-control'} })}}
+                </div>
                 {{ form_errors(formE.nom) }}
 
             </div>
             <div class="mb-3">
-                {{ form_widget(formE.prenom, { 'attr': {'class': 'form-control','style': 'width: 350px'} }) }}
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text"><i class='bx bxs-user'></i></span>
+                {{ form_widget(formE.prenom, { 'attr': {'class': 'form-control'} }) }}
+                </div>
                 {{ form_errors(formE.prenom) }}
 
             </div>
             <div class="mb-3">
-                {{ form_widget(formE.email, { 'attr': {'class': 'form-control','style': 'width: 350px'} }) }}
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                {{ form_widget(formE.email, { 'attr': {'class': 'form-control'} }) }}
+                </div>
                 {{ form_errors(formE.email) }}
 
             </div>
             <div class="mb-3 form-password-toggle">
                 <div class="input-group input-group-merge">
+                    <span class="input-group-text"><i class='bx bxs-key'></i></span>
                     {{ form_widget(formE.passwd, { 'attr': {'class': 'form-control'} }) }}
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                 </div>
                 {{ form_errors(formE.passwd) }}
 
             </div>
+            <div class="mb-3 form-password-toggle">
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text"><i class='bx bxs-key'></i></span>
+                    {{ form_widget(formE.confirmpwd, { 'attr': {'class': 'form-control'} }) }}
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                </div>
+                {% for flashMessage in app.session.flashbag.get('alert') %}
+                    <div class="alert alert-danger">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            </div>
             <div class="mb-3">
-                {{ form_widget(formE.adresse , { 'attr': {'class': 'form-control','style': 'width: 350px'} }) }}
+                <div class="input-group input-group-merge">
+                <span class="input-group-text"><i class='bx bxs-home'></i></span>
+                {{ form_widget(formE.adresse , { 'attr': {'class': 'form-control'} }) }}
+                </div>
                 {{ form_errors(formE.adresse) }}
 
             </div>
             <div class="mb-3">
-                {{ form_widget(formE.bio , { 'attr': {'class': 'form-control','style': 'width: 350px'} }) }}
+                <div class="input-group input-group-merge">
+                     <span id="basic-icon-default-message2" class="input-group-text"><i class="bx bx-comment"></i></span>
+                    {{ form_widget(formE.bio , { 'attr': {'class': 'form-control'} }) }}
+                </div>
                 {{ form_errors(formE.bio) }}
 
             </div>
             <div class="mb-3">
-                {{ form_widget(formE.certification , { 'attr': {'class': 'form-control','style': 'width: 350px'} }) }}
+                <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-message2" class="input-group-text">
+                        <i class='bx bxs-certification' ></i>
+                    </span>
+                {{ form_widget(formE.certification , { 'attr': {'class': 'form-control'} }) }}
+                </div>
                 {{ form_errors(formE.certification) }}
 
             </div>
             <div class="mb-3">
                 {#                class="form-control"#}
-                <label class="form-label" >Profile Picture</label>
+                <i class='bx bxs-image-add' ></i> <label class="form-label" >Profile Picture</label>
                 {{ form_widget(formE.imgFile , { 'attr': {'class': 'form-control'} }) }}
                 {{ form_errors(formE.imgFile) }}
-
+                {% for flashMessage in app.session.flashbag.get('alert2') %}
+                    <div class="alert alert-danger">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                {#                class="form-control"#}
+                <i class='bx bx-captions'></i> <label class="form-label" >Captcha Code</label>
+                {{ form_widget(formE.captchaCode ) }}
+                {{ form_errors(formE.captchaCode) }}
             </div>
             {{ form_widget(formE.Registre, { 'attr': {'class': 'btn btn-primary d-grid w-100'}}) }}
             {{ form_widget(formE.Cancel, { 'attr': {'class': 'btn btn-danger d-grid w-100'}}) }}

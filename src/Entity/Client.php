@@ -3,16 +3,19 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Captcha\Bundle\CaptchaBundle\Validator\Constraints as CaptchaAssert;
+
 
 /**
  * Client
  *
  * @ORM\Table(name="client", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"})}, indexes={@ORM\Index(name="id_coach", columns={"id_coach"}), @ORM\Index(name="id_nutri", columns={"id_nutri"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
 
  */
-class Client
+class Client implements UserInterface
 {
     /**
      * @var int
@@ -127,6 +130,23 @@ class Client
      * })
      */
     private $idNutri;
+
+    /**
+     * @CaptchaAssert\ValidCaptcha(
+     *      message = "CAPTCHA validation failed, try again."
+     * )
+     */
+    protected $captchaCode;
+
+    public function getCaptchaCode()
+    {
+        return $this->captchaCode;
+    }
+
+    public function setCaptchaCode($captchaCode)
+    {
+        $this->captchaCode = $captchaCode;
+    }
 
     public function getId(): ?int
     {
@@ -254,4 +274,34 @@ class Client
     }
 
 
+    public function getRoles()
+    {
+        // TODO: Implement getRoles() method.
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);    }
+
+    public function getPassword()
+    {
+        // TODO: Implement getPassword() method.
+        return $this->passwd;
+
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function getUsername()
+    {
+        // TODO: Implement getUsername() method.
+        return $this->email;
+
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
 }
