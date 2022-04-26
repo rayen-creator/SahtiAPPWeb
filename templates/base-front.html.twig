@@ -113,12 +113,26 @@
                                     <li><a href="">Contact</a></li>
                                     {% if app.user %}
                                         <li>
-                                            {% if app.user.username =="Admin@sahti.com" %}
-                                            <a href="/adminpanel" class="btn btn-success"> {{ app.user.username }}</a>
-                                            {% else %}
-                                            <a href="/profile" class="btn btn-success"> {{ app.user.username }}</a>
-                                            {% endif %}
+{#                                            {% if app.user.username =="Admin@sahti.com" %}#}
+{#                                            <a href="/adminpanel" class="btn btn-success"> {{ app.user.username }}</a>#}
+{#                                            {% else %}#}
+{#                                            {% endif %}#}
+                                            {% if is_granted('ROLE_ADMIN') %}
+                                                <a href="/adminpanel" class="btn btn-success"> {{ app.user.username }}</a>
 
+                                            {% endif %}
+                                            {% if is_granted('ROLE_USER') %}
+                                                <a href="/profile" class="btn btn-success"> {{ app.user.username }}</a>
+
+                                            {% endif %}
+                                            {% if is_granted('ROLE_COACH') %}
+                                                <a href="/profileE" class="btn btn-success"> {{ app.user.username }}</a>
+
+                                            {% endif %}
+                                            {% if is_granted('ROLE_NUTRI') %}
+                                                <a href="/profileN" class="btn btn-success"> {{ app.user.username }}</a>
+
+                                            {% endif %}
                                         </li>
                                         <li>
                                             <a href="/logout" class="btn btn-danger">

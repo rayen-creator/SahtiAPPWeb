@@ -31,8 +31,34 @@ class ModifyuserController extends AbstractController
         return $this->render('modifyuser/indexclient.html.twig', [
             'client' => $currentuser,
         ]);
+//        return $this->redirectToRoute('modifycoach');
     }
 
+    /**
+     * @Route("/profileE", name="app_profileE")
+     */
+    public function indexE(CoachRepository $usrRep): Response
+    {
+        $user=$this->getUser()->getUsername();
+        $currentuser=$usrRep->findOneBy(array('email'=>$user));
+        return $this->render('modifyuser/indexcoach.html.twig', [
+            'coach' => $currentuser,
+        ]);
+//        return $this->redirectToRoute('modifycoach');
+    }
+
+    /**
+     * @Route("/profileN", name="app_profileN")
+     */
+    public function indexN(NutritionisteRepository $usrRep): Response
+    {
+        $user=$this->getUser()->getUsername();
+        $currentuser=$usrRep->findOneBy(array('email'=>$user));
+        return $this->render('modifyuser/indexnutri.html.twig', [
+            'nutri' => $currentuser,
+        ]);
+//        return $this->redirectToRoute('modifycoach');
+    }
 
 
     /**
@@ -137,9 +163,9 @@ class ModifyuserController extends AbstractController
 
     /**
      * @return Response
-     * @Route("/modifycoach", name="modifycoach")
+     * @Route("/modifycoach/{id}", name="modifycoach")
      */
-    public function modifycoach(Request $request , CoachRepository $em)
+    public function modifycoach($id,Request $request , CoachRepository $em)
     {
         $form = $this->createFormBuilder()
             ->add('nom', TextType::class, array(
@@ -169,7 +195,7 @@ class ModifyuserController extends AbstractController
         $bio = $form->get('bio')->getData();
         $image = $form->get('img')->getData();
 
-        $foundE= $this -> getDoctrine() -> getRepository(Entraineur::class)->find(1);
+        $foundE= $this -> getDoctrine() -> getRepository(Entraineur::class)->find($id);
         if ($form->isSubmitted() && $form->isValid()) {
             if  ( ( $LastName != null )|| ($FirstName != null) || ($confirmpwd != null) || ($bio != null) || ($image != null) ) {
 
@@ -256,9 +282,9 @@ class ModifyuserController extends AbstractController
 
     /**
      * @return Response
-     * @Route("/modifynutri", name="modifynutri")
+     * @Route("/modifynutri/{id}", name="modifynutri")
      */
-    public function modifynutri(Request $request , NutritionisteRepository $em)
+    public function modifynutri($id,Request $request , NutritionisteRepository $em)
     {
         $formN = $this->createFormBuilder()
             ->add('nom', TextType::class, array(
@@ -288,7 +314,7 @@ class ModifyuserController extends AbstractController
         $bio = $formN->get('bio')->getData();
         $image = $formN->get('img')->getData();
 
-        $foundN= $this -> getDoctrine() -> getRepository(Nutritioniste::class)->find(1);
+        $foundN= $this -> getDoctrine() -> getRepository(Nutritioniste::class)->find($id);
         if ($formN->isSubmitted() && $formN->isValid()) {
             if  ( ( $LastName != null )|| ($FirstName != null) || ($confirmpwd != null) || ($bio  != null) || ($image  != null) ) {
 

@@ -6,6 +6,10 @@ security:
             algorithm: auto
         App\Entity\Client:
             algorithm: auto
+        App\Entity\Entraineur:
+            algorithm: auto
+        App\Entity\Nutritioniste:
+            algorithm: auto
 
 
     providers:
@@ -14,14 +18,14 @@ security:
             entity: { class: App\Entity\Admin, property: email }
         user_client:
             entity: { class: App\Entity\Client, property: email }
-        #        user_coach:
-        #            entity: { class: App\Entity\Entraineur, property: email }
-        #        user_nutri:
-        #            entity: { class: App\Entity\Nutritioniste, property: email }
+        user_coach:
+            entity: { class: App\Entity\Entraineur, property: email }
+        user_nutri:
+            entity: { class: App\Entity\Nutritioniste, property: email }
         #        users_in_memory: { memory: null }
         chain_provider:
             chain:
-                providers: [ user_admin,user_client]
+                providers: [ user_admin,user_client,user_coach,user_nutri]
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -56,5 +60,9 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
      - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+     - { path: ^/resetpwd, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
+     - { path: ^/registre, roles: IS_AUTHENTICATED_ANONYMOUSLY }
      - { path: ^/adminpanel, roles: ROLE_ADMIN }
-     - { path: ^/profile, roles: ROLE_USER }
+     -  { path: ^/profile/listavailablecoach, roles: ROLE_USER }
+     -  { path: ^/profile/listavailablenutri, roles: ROLE_USER }
+     - { path: ^/profile, roles: [ROLE_USER, ROLE_COACH,ROLE_NUTRI] }

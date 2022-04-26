@@ -261,21 +261,30 @@ class Nutritioniste implements UserInterface
     public function getRoles()
     {
         // TODO: Implement getRoles() method.
+        $roles[] = 'ROLE_NUTRI';
+
+        return array_unique($roles);
     }
 
     public function getPassword()
     {
         // TODO: Implement getPassword() method.
+        return $this->passwd;
+
     }
 
     public function getSalt()
     {
         // TODO: Implement getSalt() method.
+        return $this->img;
+
     }
 
     public function getUsername()
     {
         // TODO: Implement getUsername() method.
+        return $this->email;
+
     }
 
     public function eraseCredentials()

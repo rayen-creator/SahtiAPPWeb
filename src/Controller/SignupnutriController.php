@@ -11,15 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SignupnutriController extends AbstractController
 {
-    /**
-     * @Route("/signupnutri", name="app_signupnutri")
-     */
-    public function index(): Response
-    {
-        return $this->render('signupnutri/index.html.twig', [
-            'controller_name' => 'SignupnutriController',
-        ]);
-    }
+
 
     /**
      * @return Response

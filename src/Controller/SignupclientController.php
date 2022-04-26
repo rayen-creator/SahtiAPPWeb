@@ -12,15 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SignupclientController extends AbstractController
 {
-    /**
-     * @Route("/signupclient", name="app_signupclient")
-     */
-    public function index(): Response
-    {
-        return $this->render('signupclient/index.html.twig', [
-            'controller_name' => 'SignupclientController',
-        ]);
-    }
 
     /**
      * @return Response

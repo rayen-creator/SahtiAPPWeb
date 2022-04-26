@@ -4,6 +4,8 @@ namespace App\Security;
 
 use App\Entity\Admin;
 use App\Entity\Client;
+use App\Entity\Entraineur;
+use App\Entity\Nutritioniste;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,13 +72,21 @@ class LoginFromAuthenticator extends AbstractFormLoginAuthenticator implements P
 
         $userc = $this->entityManager->getRepository(Client::class)->findOneBy(['email' => $credentials['email']]);
         $usera = $this->entityManager->getRepository(Admin::class)->findOneBy(['email' => $credentials['email']]);
+        $usere = $this->entityManager->getRepository(Entraineur::class)->findOneBy(['email' => $credentials['email']]);
+        $usern = $this->entityManager->getRepository(Nutritioniste::class)->findOneBy(['email' => $credentials['email']]);
 
 
         if ($userc !=null ){
             $user=$userc;
-        }else if ($usera!= null){
+        }else if ($usera != null){
             $user=$usera;
         }
+        if ($usere != null){
+            $user=$usere;
+        }else if ($usern != null){
+            $user=$usern;
+        }
+
         if (!$user) {
             throw new UsernameNotFoundException('Email could not be found.');
         }

@@ -291,6 +291,8 @@ class Client implements UserInterface
     public function getSalt()
     {
         // TODO: Implement getSalt() method.
+        return $this->img;
+
     }
 
     public function getUsername()
