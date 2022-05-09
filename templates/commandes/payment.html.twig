@@ -1,0 +1,147 @@
+{% extends 'base-payement.html.twig' %}
+
+{% block title %} Payment {% endblock %}
+
+{% block body %}
+    <!-- Icons Grid -->
+    <section class="features-icons bg-light text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card-body">
+                        <form action="{{ path("payment", {'id': commande.id }) }}" method="post" id="payment-form">
+                        <div class="card">
+  <div class="card-body">
+                        <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-7">
+                            <div class="form-row">
+                                <div id="card-elements"></div>
+
+                                <script src="https://js.stripe.com/v3/"></script>
+
+                                <div id="card-errors" role="alert"></div>
+                            </div>
+                            </div>
+                            </div>
+
+                            <button class="btn btn-primary mt-4">
+                                Acheter {{ commande.montantCmd }} DT
+                            </button>
+                        </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col">
+                    <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                        <img src="" alt="..." class="img-thumbnail">
+                        <h3> name </h3>
+                        <p>
+                           description
+                        </p>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+<script>
+
+    {% if app_environement == 'dev' %}
+        var stripeToken = "{{ stripe_public_key_test }}";
+    {% endif %}
+
+    var stripe = Stripe(stripeToken);
+    var elements = stripe.elements();
+    var subscription = "1";
+    var clientSecret = "{{ intentSecret }}";
+    var cardholderName = "test";
+    var cardholderEmail = "elakrimiihebb@gmail.com";
+
+    console.log('clientSecret',clientSecret);
+
+    var styleCustom = {
+    	base: {
+    		fontSize: '16px',
+            color: '#25332d'
+        }
+    }
+
+    // Monter notre form a l'objet Stripe
+    var card = elements.create('card', {style: styleCustom });
+    card.mount("#card-elements");
+
+    //Message Error
+    card.addEventListener('change', function(event){
+    	var displayError = document.getElementById('card-errors');
+
+    	if(event.error) {
+		    displayError.textContent = event.error.message;
+        } else {
+		    displayError.textContent = '';
+        }
+    });
+
+    var form = document.getElementById('payment-form');
+
+    form.addEventListener('submit', function(event) {
+    	event.preventDefault();
+
+	    stripe.handleCardPayment(
+		    clientSecret,
+		    card,
+            {
+            	payment_method_data: {
+		            billing_details: {
+		            	name: cardholderName,
+                        email: cardholderEmail
+                    }
+                }
+            }
+        ).then((result) => {
+        	if(result.error) {
+        		// Display error
+            } else if('paymentIntent' in result) {
+        		console.log('Result : ',result);
+        		stripeTokenHandler(result.paymentIntent);
+		        console.log('Result paymentIntent : ',result.paymentIntent);
+                alert("Paiement effectuer avec succès!\n vous allez être rediriger vers votre facture")
+                window.location.replace("{{path ('factureClient', {'id': commande.id })}}");
+            }
+        })
+    });
+
+    function stripeTokenHandler(intent) {
+    	var form = document.getElementById('payment-form');
+    	var InputIntentId = document.createElement('input');
+    	var InputIntentPaymentMethod = document.createElement('input');
+	    var InputIntentStatus = document.createElement('input');
+	    var InputSubscription = document.createElement('input');
+
+	    InputIntentId.setAttribute('type', 'hidden');
+	    InputIntentId.setAttribute('name', 'stripeIntentId');
+	    InputIntentId.setAttribute('value', intent.id);
+
+	    InputIntentPaymentMethod.setAttribute('type', 'hidden');
+	    InputIntentPaymentMethod.setAttribute('name', 'stripeIntentPaymentMethod');
+	    InputIntentPaymentMethod.setAttribute('value', intent.payment_method);
+
+	    InputIntentStatus.setAttribute('type', 'hidden');
+	    InputIntentStatus.setAttribute('name', 'stripeIntentStatus');
+	    InputIntentStatus.setAttribute('value', intent.status);
+
+	    InputSubscription.setAttribute('type', 'hidden');
+	    InputSubscription.setAttribute('name', 'subscription');
+	    InputSubscription.setAttribute('value', subscription);
+
+	    form.appendChild(InputIntentId);
+	    form.appendChild(InputIntentPaymentMethod);
+	    form.appendChild(InputIntentStatus);
+	    form.appendChild(InputSubscription);
+	    form.submit();
+    }
+</script>
+{% endblock %}

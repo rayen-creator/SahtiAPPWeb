@@ -1,0 +1,16 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Edit Repas{% endblock %}
+
+{% block body %}
+    <h1>Edit Repas</h1>
+
+    {{ include('repas/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('repas_index') }}">back to list</a>
+
+    {{ include('repas/_delete_form.html.twig') }}
+    <div align="right" style="margin-right: 165px; margin-top: -34px;">
+
+    </div>
+{% endblock %}

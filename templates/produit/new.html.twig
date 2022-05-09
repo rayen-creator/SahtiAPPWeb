@@ -1,0 +1,67 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}New Produit{% endblock %}
+
+{% block body %}
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+        <div class="col-md-6">
+            <div class="card mb-4 " >
+                <h5 class="card-header">Ajouter Un Produit</h5>
+                {{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+                <div class="card-body">
+                    <div>
+                        <label for="defaultFormControlInput" class="form-label">Nom</label>
+                        {{ form_widget(form.nom,{'attr':{'class':'form-control'}})}}
+                        {{ form_errors(form.nom,{'attr':{'class':'text-danger'}}) }}
+                    </div>
+
+                    <div>
+                        <label for="defaultFormControlInput" class="form-label">Prix</label>
+                        {{ form_widget(form.prix,{'attr':{'class':'form-control'}})}}
+                        {{ form_errors(form.prix,{'attr':{'class':'text-danger'}}) }}
+
+                    </div>
+                    <div>
+                        <label for="defaultFormControlInput" class="form-label">Image</label>
+                        {{ form_widget(form.image,{'attr':{'class':'form-control'}})}}
+                        {{ form_errors(form.image,{'attr':{'class':'text-danger'}}) }}
+                    </div>
+
+                    <div>
+                        <label for="defaultFormControlInput" class="form-label">Quantite</label>
+                        {{ form_widget(form.quantite,{'attr':{'class':'form-control'}})}}
+                        {{ form_errors(form.quantite,{'attr':{'class':'text-danger'}}) }}
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                        {{ form_widget(form.descprod,{'attr':{'class':'TextareaType'}})}}
+                        {{ form_errors(form.descprod,{'attr':{'class':'text-danger'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleFormControlSelect1" class="form-label">Categorie</label>
+                        {{ form_widget(form.id_cat,{'attr':{'class':'form-control'}})}}
+
+                        </select>
+                    </div>
+                    <div class="row " style="margin-left: 180px">
+
+                        <div class="col">
+                                {{form_widget(form.save,{'attr':{'class':'btn btn-primary'}}) }}
+                        </div>
+
+                            {{ form_end(form) }}
+                        </div>
+                    <a class="btn btn-primary" href="{{ path('app_produit_index') }}">back to list</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+

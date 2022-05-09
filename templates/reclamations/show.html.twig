@@ -1,0 +1,52 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Reclamations{% endblock %}
+
+{% block body %}
+<div class="card p-3">
+
+    <h1>Reclamations</h1>
+
+    <table class="table">
+        <tbody>
+          <tr>
+                <th>Numreclamation</th>
+                <td>{{ reclamation.numreclamation }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ reclamation.titre }}</td>
+            </tr>
+            <tr>
+                <th>Message</th>
+                <td>{{ reclamation.message }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ reclamation.type }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                 <td><img src="{{ asset('Upload/')}}{{ reclamation.image }}"alt=""style="width: 200px;height:200px"></td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{% if (reclamation.cloturer != 1) %} {{ reclamation.etat_reclamation ? 'En cours de traitement' : 'Non traité' }} {% else %} Traitée {% endif %}</td>
+            </tr>
+            <tr>
+                <th>Cloturer</th>
+                <td>{{ reclamation.cloturer ? 'Cloturée' : 'Non cloturée' }}</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reclamations_index') }}" class="pr-3">Retour à la liste des réclamations</a>
+
+    <a href="{{ path('app_reclamations_edit', {'id': reclamation.id}) }}" claas>Modifier</a>
+        <a href="{{ path('app_reclamations_cloture', {'id': reclamation.id}) }}" >Cloturer</a>
+
+
+    {{ include('reclamations/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

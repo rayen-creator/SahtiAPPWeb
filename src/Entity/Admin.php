@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * Admin
  *
  * @ORM\Table(name="admin", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\AdminRepository")
  */
 class Admin implements  UserInterface
 {

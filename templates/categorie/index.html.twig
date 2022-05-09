@@ -1,0 +1,52 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Categorie index{% endblock %}
+
+{% block body %}
+<div class="content-wrapper">
+
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+
+
+        <div class="card">
+            <h1 class="card-header">table des catégorie</h1>
+            <div class="table">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>IdCat</th>
+                            <th>Titre</th>
+                            <th>ImgCat</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                    <tr class="table-default">
+                    {% for categorie in categories %}
+                        <tr>
+                            <td>{{ categorie.idCat }}</td>
+                            <td>{{ categorie.titre }}</td>
+                            <td><img class="img-rounded" src="{{ asset('images/'~categorie.imgCat) }}" alt="" width="100" height="100" style="margin: 20px"></td>
+                            <td>
+                                <a class="btn btn-primary" href="{{ path('app_categorie_show', {'idCat': categorie.idCat}) }}">show</a>
+                                <a class="btn btn-primary" href="{{ path('app_categorie_edit', {'idCat': categorie.idCat}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a class="btn btn-primary" href="{{ path('app_categorie_new') }}">Create new</a>
+                <nav aria-label="Page navigation example"  style="align-content: center">
+                    <ul class="pagination justify-content-center">
+                        {{ knp_pagination_render(categories) }}
+                    </ul>
+                </nav>
+{% endblock %}

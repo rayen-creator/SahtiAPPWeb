@@ -1,0 +1,54 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Edit Promotion{% endblock %}
+
+{% block body %}
+<div class="container-xxl flex-grow-1 container-p-y">
+
+
+    <div class="col-md-6">
+        <div class="card mb-4 " >
+            <h5 class="card-header">Edit Une Promotion</h5>
+            {{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+            <div class="card-body">
+                <div>
+                    <label for="defaultFormControlInput" class="form-label">Titre</label>
+                    {{ form_widget(form.titre,{'attr':{'class':'form-control'}})}}
+
+                </div>
+                {{ form_errors(form.titre,{'attr':{'class':'text-danger'}}) }}
+                <div>
+                    <label for="defaultFormControlInput" class="form-label">Porcentage</label>
+                    {{ form_widget(form.porcentage,{'attr':{'class':'form-control'}})}}
+                </div>
+                <div>
+                    <label for="defaultFormControlInput" class="form-label">Image</label>
+                    {{ form_widget(form.image,{'attr':{'class':'form-control'}})}}
+                </div>
+                {{ form_errors(form.image,{'attr':{'class':'text-danger'}}) }}
+                <div>
+                    <label for="defaultFormControlInput" class="form-label">Description</label>
+                    {{ form_widget(form.descprom,{'attr':{'class':'form-control'}})}}
+                </div>
+                {{ form_errors(form.descprom,{'attr':{'class':'text-danger'}}) }}
+                <div class="mb-3">
+                    <label for="exampleFormControlSelect1" class="form-label">Produit</label>
+                    {{ form_widget(form.idProd,{'attr':{'class':'form-control'}})}}
+                    </select>
+                </div>
+                <div class="row " style="margin-top: 20px">
+                    <div class="row " style="margin-left: 90px">
+
+                        <div class="col">
+                            {{form_widget(form.save,{'attr':{'class':'btn btn-primary'}}) }}
+                            {{ form_end(form) }}
+                        </div>
+                        <div class="col">
+                            {{ include('promotion/_delete_form.html.twig') }}
+                        </div>
+
+                    </div>
+                    <div class="row " style="margin-top: 10px">
+                        <a class="btn btn-primary" href="{{ path('app_promotion_index') }}">back to list</a>
+
+{% endblock %}

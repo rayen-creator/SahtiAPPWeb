@@ -1,0 +1,84 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Regime index{% endblock %}
+
+{% block body %}
+
+ <center><h1>Regime index</h1></center>
+    <table  class="table" style="width:100%"  id="tableac">
+        <input id="search" class="form-control mr-sm-2" type="text" name="search" placeholder="Search ..." aria-label="Search"  >
+        <script src="{{ asset('/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+
+        <div id="fb-root"></div>
+
+        <thead>
+        <tr>
+                <th>IdRegime</th>
+                <th>Objectif</th>
+                <th>DateDebut</th>
+                <th>Duree</th>
+                <th>MaxCalories</th>
+                <th>NbRepas</th>
+                <th>IdSpecialiste</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+            <form  style="margin-bottom: 20px",   method="post" action="{{ path('statistiquesRec') }}">
+                <input class="btn btn-primary" type="submit" value="Statistiques">
+            </form>
+        <tbody>
+        {% for regime in regimes %}
+            <tr>
+                <td>{{ regime.idRegime }}</td>
+                <td>{{ regime.objectif }}</td>
+                <td>{{ regime.dateDebut ? regime.dateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ regime.duree }}</td>
+                <td>{{ regime.maxCalories }}</td>
+                <td>{{ regime.nbRepas }}</td>
+                <td>{{ regime.idSpecialiste }}</td>
+                <td><img style="height: 100px; width: 100px" src="{{ asset('images/regime/'~regime.image) }}" ></td>
+                <td>
+                    <a href="{{ path('regime_show', {'idRegime': regime.idRegime}) }}">show</a>
+                    <a href="{{ path('regime_edit', {'idRegime': regime.idRegime}) }}">edit</a>
+                </td>
+            </tr>
+            <script>
+                $(document).ready(function(){
+                    $('#search').keyup(function(){
+                        search_table($(this).val());
+                    });
+                    function search_table(value){
+                        $('#tableac tbody tr').each(function(){
+                            var found = 'false';
+                            $(this).each(function(){
+                                if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                                {
+                                    found = 'true';
+                                }
+                            });
+                            if(found == 'true')
+                            {
+                                $(this).show();
+
+                            }
+                            else
+                            {
+                                $(this).hide();
+
+                            }
+                        });
+                    }
+                });
+            </script>
+        {% endfor %}
+        <div class="nk-pagination nk-pagination-center">
+            {{ knp_pagination_render(regimes) }}
+        </div>
+        </tbody>
+    </table>
+    </div>
+
+    <a href="{{ path('regime_new') }}">Create new</a>
+{% endblock %}

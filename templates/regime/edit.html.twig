@@ -1,0 +1,13 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Edit Regime{% endblock %}
+
+{% block body %}
+    <h1>Edit Regime</h1>
+
+    {{ include('regime/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('regime_index') }}">back to list</a>
+
+    {{ include('regime/_delete_form.html.twig') }}
+{% endblock %}

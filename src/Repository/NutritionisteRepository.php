@@ -20,6 +20,18 @@ class NutritionisteRepository extends ServiceEntityRepository
     }
 
 
+
+    public function findavailablenutri(){
+        $query=$this->getEntityManager()
+            ->createQuery('select n.nom , n.prenom , n.email , n.adresse , n.bio , n.certification , n.img
+             from APP\Entity\nutritioniste n where n.isblocked=:isblocked')
+            ->setParameter('isblocked',false );
+
+        return $query->getResult();
+    }
+
+    //************************************
+
     public function findPlanBySujet($sujet){
         return $this->createQueryBuilder('Nutritioniste')
             ->andWhere('Nutritioniste.nom LIKE :sujet or Nutritioniste.prenom LIKE :sujet  ')

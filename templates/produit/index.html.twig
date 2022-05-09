@@ -1,0 +1,209 @@
+{% extends 'base-back.html.twig' %}
+
+
+
+{% block title %}Produit index{% endblock %}
+
+
+{% block body %}
+        {% for message in app.flashes('success')%}
+            <div class="alert alert-success " style="align-content: center">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+     <div class="card" >
+         <nav
+                 class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                 id="layout-navbar"
+                 style="align-content: center"
+         >
+             <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none" >
+                 <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                     <i class="bx bx-menu bx-sm"></i>
+                 </a>
+             </div>
+             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                 <div class="content-wrapper">
+                     <div class="navbar-nav align-items-center">
+                         <input type="text" id="show" placeholder="recherche par Nom 🔍">
+                         <a style="margin-left: 20px" class="btn-primary btn" href="" id="idup">Prix ⬆️ASC</a>
+                         <a class="btn-primary btn" style="margin-left: 20px" href="" id="iddown">prix DESC ⬇️</a>
+                     </div>
+                 </div>
+             </div>
+
+
+         </nav>
+        <h1 class="card-header">table des produit</h1>
+        <div class="table" >
+            <table id="t" class="table" >
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prix</th>
+                    <th>Image</th>
+                    <th>Quantite</th>
+                    <th>Descprod</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+                <tbody id="all">
+                {% for produit in produits %}
+                    <tr>
+                        <td>{{ produit.nom }}</td>
+                        <td>{{ produit.prix }}</td>
+                        <td><img class="img-rounded" src="{{ asset('images/'~produit.image) }}" alt="" width="100" height="100" style="margin: 20px"></td>
+                        <td>{{ produit.quantite }}</td>
+                        <td>{{ produit.descprod| raw }}</td>
+                        <td>
+                            <div class="row">
+                                <div class="col">
+                                <a class="btn btn-primary" style="margin: 1px" href="{{ path('app_produit_show', {'idProd': produit.idProd}) }}">show</a>
+                                <a class="btn btn-primary" style="margin: 1px" href="{{ path('app_produit_edit', {'idProd': produit.idProd}) }}">edit</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tbody id="search">
+                </tbody>
+        </table>
+            <a class="btn btn-primary" style="margin: 10px" href="{{ path('app_produit_new') }}">Create new</a>
+            <a type="submit" class="btn btn-primary " style="margin:10px"  href="{{ path('imprProd' )}}">  <strong>enregistrer  pdf</strong></a>
+        </div>
+         <nav aria-label="Page navigation example"  style="align-content: center">
+             <ul class="pagination justify-content-center">
+                 {{ knp_pagination_render(produits) }}
+             </ul>
+         </nav>
+     </div>
+    </div>
+
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+<script>
+    $( document ).ready(function() {
+        $("#show").keyup(function(e) {
+            var value = $(this).val();
+            $.ajax({
+                url : "{{ path('search_back1') }}",
+                method: "GET",
+                data: {
+                    searchValue: value,
+                },
+                success : function(data){
+                    $('#t tbody#search').empty();
+                    if(data){
+                        $('#t tbody#all').hide();
+                        for (i = 0; i < data.length; i++) {
+
+                            $('#t tbody#search').append('' +
+                                '<tr><td> '+data[i].nom+' </td>' +
+                                '<td>'+data[i].prix+'</td>' +
+                                '<td>'+'<img src="public/images/'+data[i].image +') }}">'+'</td>'+
+                                '<td>'+data[i].quantite+'</td>' +
+                                '<td>'+data[i].descprod+'</td>' +
+                                '<td><div class="row">'+
+                                '<div class="col">'+
+                                '<a class="btn btn-primary" style="margin: 1px" href="/produit/'+data[i].idProd+'">show</a>'+
+                                '<a class="btn btn-primary" style="margin: 1px" href="/produit/'+data[i].idProd+'/edit">edit</a>'+
+                                '</div>'+
+                                '</div></td>'+
+                                '</tr>');
+                        };
+                    }
+                    else
+                    {
+
+                        $('#t tbody#all').show();
+                        $('#t tbody#search').empty();
+                        $('#t tbody#search').fadeIn('fast');
+                    }
+                },
+            });
+            return false;
+        });
+    });
+    $("#idup").click(function(e) {
+        var value3 ="ASC";
+        $.ajax({
+            url :  "{{ path('UPtriEQUIPE') }}",
+            type : 'GET',
+            data: {
+
+                'order': value3
+            },
+            success : function(data){
+                $('#t tbody#search').empty();
+
+                for (i = 0; i < data.length; i++) {
+
+                    $('#t tbody#all').hide();
+                    $('#t tbody#search').append('' +
+                        '<tr><td> '+data[i].nom+' </td>' +
+                        '<td>'+data[i].prix+'</td>' +
+                        '<td>'+'<img src="public/images/'+data[i].image +') }}">'+'</td>'+
+                        '<td>'+data[i].quantite+'</td>' +
+                        '<td>'+data[i].descprod+'</td>' +
+                        '<td><div class="row">'+
+                        '<div class="col">'+
+                        '<a class="btn btn-primary" style="margin: 1px" href="/produit/'+data[i].idProd+'">show</a>'+
+                        '<a class="btn btn-primary" style="margin: 1px" href="/produit/'+data[i].idProd+'/edit">edit</a>'+
+                        '</div>'+
+                        '</div></td>'+
+                        '</tr>');
+                }
+            },
+
+
+
+        });
+        return false;});
+    $("#iddown").click(function(e) {
+        var value3 ="DESC";
+        $.ajax({
+            url :  "{{ path('DOWNtriEQUIPE') }}",
+            type : 'GET',
+            data: {
+
+                'order': value3
+            },
+            success : function(data){
+                $('#t tbody#search').empty();
+
+                for (i = 0; i < data.length; i++) {
+
+                    $('#t tbody#all').hide();
+                    $('#t tbody#search').append('' +
+                        '<tr><td> '+data[i].nom+' </td>' +
+                        '<td>'+data[i].prix+'</td>' +
+                        '<td>'+'<img src="public/images/'+data[i].image +') }}">'+'</td>'+
+                        '<td>'+data[i].quantite+'</td>' +
+                        '<td>'+data[i].descprod+'</td>' +
+                        '<td><div class="row">'+
+                        '<div class="col">'+
+                        '<a class="btn btn-primary" style="margin: 1px" href="/produit/'+data[i].idProd+'">show</a>'+
+                        '<a class="btn btn-primary" style="margin: 1px" href="/produit/'+data[i].idProd+'/edit">edit</a>'+
+                        '</div>'+
+                        '</div></td>'+
+                        '</tr>');
+                }
+            },
+
+
+
+        });
+        return false;});
+</script>
+{% endblock %}
+

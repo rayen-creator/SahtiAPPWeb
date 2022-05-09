@@ -1,0 +1,49 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Commandes index{% endblock %}
+
+{% block body %}
+    <h1>Gestion commandes</h1>
+<div class="card">
+  <h5 class="card-header">Liste des commandes</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead>
+        <tr>
+           <th>NumCmd</th>
+                <th>MontantCmd</th>
+                <th>Commentaire</th>
+                <th>Etat</th>
+                <th>Qtecmd</th>
+                <th>ModePay</th>
+                
+                <th>actions</th>
+        </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+       {% for commande in commandes %}
+        <tr>
+            <td>{{ commande.numCmd }}</td>
+            <td>{{ commande.montantCmd }}</td>
+            <td>{{ commande.commentaire }}</td>
+            <td><span class="badge bg-label-primary me-1">{{ commande.etat ? 'Validé' : 'Non Validé' }}</span></td>
+            <td>{{ commande.qtecmd }}</td>
+            <td>{{ commande.modePay }}</td>
+            
+            <td>
+                <a href="{{ path('app_commandes_show', {'id': commande.id}) }}">Afficher</a>
+                <a href="{{ path('app_commandes_edit', {'id': commande.id}) }}">Valider</a>
+            </td>          
+        </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">Vide</td>
+            </tr>
+          {% endfor %}
+           {{ knp_pagination_render(commandes) }} 
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

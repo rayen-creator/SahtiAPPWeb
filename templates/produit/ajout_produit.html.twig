@@ -1,0 +1,29 @@
+
+<html lang="fr">
+<body>
+    <div class="table-bordered" style="border-color: #ffffff " >
+    <table  width="650" border="0" cellspacing="0" cellpadding="0" class="table-bordered" >
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Image</th>
+            <th>Quantite</th>
+        </tr>
+        </thead>
+        {% for produit in produits %}
+        <tr>
+            <td class="box1" bgcolor="#ffffff" align="center" style="padding:45px 30px;" >{{ produit.idProd }}</td>
+            <td class="box1" bgcolor="#ffffff" align="center" style="padding:45px 30px;">{{ produit.nom }}</td>
+            <td class="box1" bgcolor="#ffffff" align="center" style="padding:45px 30px;">{{ produit.prix }}</td>
+            <td class="box1" bgcolor="#ffffff" align="center" style="padding:45px 30px;"><img class="img-rounded" src="{{  email.image('@images/'~ produit.image) }}" alt="" width="100" height="100" style="margin: 20px"></td>
+            <td class="box1" bgcolor="#ffffff" align="center" style="padding:45px 30px;">{{ produit.quantite }}</td>
+            </td>
+        </tr>
+        {% endfor %}
+
+
+
+</body>
+</html>

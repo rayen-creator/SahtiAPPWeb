@@ -1,0 +1,65 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Service{% endblock %}
+
+{% block body %}
+
+    <div class="layout_padding popular_section">
+        <div class="container">
+            <h1 class="popular_taital"> <span style="border-bottom: 5px solid #4bc714;"></span></h1>
+            <div id="main_slider" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="popular_section_2">
+
+                            <h2 class="electronic_text">{{ repa.idRepas }}</h2>
+                            <p class="contrary_text">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th>IdRepas</th>
+                                    <td>{{ repa.idRepas }}</td>
+                                </tr>
+                                <tr>
+                                    <th>NomRep</th>
+                                    <td>{{ repa.nomRep }}</td>
+                                </tr>
+                                <tr>
+                                    <th>NbCal</th>
+                                    <td>{{ repa.nbCal }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Quantite</th>
+                                    <td>{{ repa.quantite }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Aliment</th>
+                                    <td>
+                                        {% for aliment in repa.aliments %}
+                                            <a style="color: black" href="{{ path('alimentfrontItem',{'idAliment' : aliment.idAliment}) }}"> {{ aliment.nom }} </a>
+                                        {% endfor %}</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            </p>
+                            <button class="view_bt"><a href="{{ path('regime_front') }}">Retour à la liste</a></button>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
+

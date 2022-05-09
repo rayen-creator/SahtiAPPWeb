@@ -1,0 +1,94 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Client index{% endblock %}
+
+{% block body %}
+    <h1>Client </h1>
+    <form method="post" class="forms-sample" style="margin-left: 29px" >
+        <div class="form-group col-md-4" style="display: flex; width: 100%!important; margin: 0px!important;">
+
+            <div class="form-check">
+                <label class="form-check-label" style="width: 55px;margin-left: -2px;margin-right: 10px;color: white;">
+                    <input style="border: solid #00d25b;" type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="id"> Id </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" style="width: 78px;margin-left: -2px;margin-right: 10px;color: white;">
+                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="nom" > Nom </label>
+            </div>
+
+            <button type="Submit" class="btn btn-success btn-fw">Sort</button>
+        </div>
+    </form>
+    <ul class="navbar-nav w-100">
+        <li class="nav-item w-100">
+            <form name="Search-method" id="Search-method" method="post" class="forms-sample" style="display: flex">
+                <div class="form-group col-md-3">
+                    <label style="margin-top: 11px;margin-left: 10px;margin-right: 14px;border-bottom: 6px solid #0090e7;padding-bottom: 7px;border-bottom-style: dotted;">Search Options</label>
+                    <select name="optionsearch" class="js-example-basic-single" style="width: 200px;height: 38px; color: white; background-color: #191c24; border-radius: 4px;text-align: center;border: 2px solid #0090e7;margin-right: 15px;">
+                        <option value="id">Id</option>
+                        <option value="nom">Nom</option>
+
+
+                    </select>
+                </div>
+                <div class="form-group col-md-9">
+                    <div class="input-group">
+                        <input name="Search" type="text" class="form-control" placeholder="Search Clients" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-sm btn-primary" type="Submit">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </li>
+    </ul>
+    <input class="form-control" id="myInput" type="text" id="navbar-search-input" placeholder="Recherch dynamique" aria-label="search" aria-describedby="search">
+    <button type="button" class="btn btn-success " name="button" style="margin-left: 10px; color:white;"> <a href="{{ url('ClientPDF')}}"> PDF </a> </button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+
+        <tbody id="hi">
+        {% for client in clients %}
+            <tr>
+                <td>{{ client.id }}</td>
+                <td>{{ client.nom }}</td>
+                <td>
+                    <button type="button" class="btn btn-success " name="button" style="margin-left: 10px; color:white;"> <a href="{{ path('app_client_show', {'id': client.id}) }}">show</a></button>
+                    <button type="button" class="btn btn-success " name="button" style="margin-left: 10px; color:white;"> <a href="{{ path('app_client_edit', {'id': client.id}) }}">edit</a></button>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ knp_pagination_render(clients) }}
+
+    {% if (back) %}
+        <div style="display: grid; margin-top: 20px;">
+            <a class="btn btn-outline-primary btn-fw" href="{{ path('app_client_index') }}">Back</a>
+        </div>
+    {% endif %}
+    <a class="btn btn-outline-primary btn-fw" href="{{ path('app_client_new') }}">Create new</a>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#hi tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+{% endblock %}

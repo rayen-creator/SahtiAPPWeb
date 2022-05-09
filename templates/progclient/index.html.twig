@@ -1,0 +1,86 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Progclient index{% endblock %}
+
+{% block body %}
+    <h1>Programme clients </h1>
+    <form method="post" class="forms-sample" style="margin-left: 29px" >
+        <div class="form-group col-md-4" style="display: flex; width: 100%!important; margin: 0px!important;">
+
+            <div class="form-check">
+                <label class="form-check-label" style="width: 55px;margin-left: -2px;margin-right: 10px;color: white;">
+                    <input style="border: solid #00d25b;" type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="id"> Id </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" style="width: 78px;margin-left: -2px;margin-right: 10px;color: white;">
+                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="idprog" > idprog </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" style="width: 78px;margin-left: -2px;margin-right: 10px;color: white;">
+                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="iduser" > iduser </label>
+            </div>
+
+            <button type="Submit" class="btn btn-success btn-fw">Sort</button>
+        </div>
+    </form>
+    <ul class="navbar-nav w-100">
+        <li class="nav-item w-100">
+            <form name="Search-method" id="Search-method" method="post" class="forms-sample" style="display: flex">
+                <div class="form-group col-md-3">
+                    <label style="margin-top: 11px;margin-left: 10px;margin-right: 14px;border-bottom: 6px solid #0090e7;padding-bottom: 7px;border-bottom-style: dotted;">Search Options</label>
+                    <select name="optionsearch" class="js-example-basic-single" style="width: 200px;height: 38px; color: white; background-color: #191c24; border-radius: 4px;text-align: center;border: 2px solid #0090e7;margin-right: 15px;">
+                        <option value="id">Id</option>
+                        <option value="idprog">idprog</option>
+                        <option value="iduser">iduser</option>
+
+
+                    </select>
+                </div>
+                <div class="form-group col-md-9">
+                    <div class="input-group">
+                        <input name="Search" type="text" class="form-control" placeholder="Search progclient" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-sm btn-primary" type="Submit">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </li>
+    </ul>
+
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>Idprog</th>
+                <th>Iduser</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody id="hi">
+        {% for progclient in progclients %}
+            <tr>
+
+                <td>{{ progclient.idprog }}</td>
+                <td>{{ progclient.iduser }}</td>
+                <td>
+                    <button type="button" class="btn btn-success " name="button" style="margin-left: 10px; color:white;">  <a  href="{{ path('app_progclient_show', {'id': progclient.id}) }}">show</a></button>
+                        <button type="button" class="btn btn-success " name="button" style="margin-left: 10px; color:white;">   <a  href="{{ path('app_progclient_edit', {'id': progclient.id}) }}">edit</a></button>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ knp_pagination_render(progclients) }}
+
+    {% if (back) %}
+    <div style="display: grid; margin-top: 20px;">
+        <a class="btn btn-outline-primary btn-fw" href="{{ path('app_progclient_index') }}">Back</a>
+    </div>
+    {% endif %}
+    <a class="btn btn-outline-primary btn-fw" href="{{ path('app_progclient_new') }}">Create new</a>
+{% endblock %}

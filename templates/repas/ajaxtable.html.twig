@@ -1,0 +1,21 @@
+<tbody>
+{% for repa in repas %}
+    <tr>
+        <td>{{ repa.idRepas }}</td>
+        <td>{{ repa.nomRep }}</td>
+        <td>{{ repa.nbCal }}</td>
+        <td>{{ repa.quantite }}</td>
+        <td> {% for regime in repa.idRegime %}
+                {{  regime.objectif }}
+            {% endfor %}</td>
+        <td>
+            <a href="{{ path('repas_show', {'idRepas': repa.idRepas}) }}">show</a>
+            <a href="{{ path('repas_edit', {'idRepas': repa.idRepas}) }}">edit</a>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td colspan="5">no records found</td>
+    </tr>
+{% endfor %}
+</tbody>

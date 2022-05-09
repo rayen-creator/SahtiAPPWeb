@@ -325,7 +325,6 @@ class ModifyuserController extends AbstractController
                         'alert1',
                         'LastName updated successfully ! '
                     );
-                    return $this->redirectToRoute('modifynutri');
 
                 }
                 if ($FirstName != null) {
@@ -335,7 +334,6 @@ class ModifyuserController extends AbstractController
                         'alert2',
                         'FirstName updated successfully ! '
                     );
-                    return $this->redirectToRoute('modifynutri');
 
                 }
                 if (($pwd != null) && ($confirmpwd != null) ) {
@@ -351,7 +349,6 @@ class ModifyuserController extends AbstractController
                             'Password mismatch ! '
                         );
                     }
-                    return $this->redirectToRoute('modifynutri');
 
                 }
                 if ($bio != null) {
@@ -361,7 +358,6 @@ class ModifyuserController extends AbstractController
                         'alert6',
                         'Bio updated successfully ! '
                     );
-                    return $this->redirectToRoute('modifynutri');
 
                 }
                 if($image != null){

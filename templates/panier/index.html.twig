@@ -1,0 +1,57 @@
+{% extends 'base-panier.html.twig' %}
+
+
+{% block body %}
+{% if items | length > 0  %}
+<div class="card">
+  <h5 class="card-header">Panier</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+<table class="table">
+<thead>
+	<tr>
+		<th>Produit</th>
+		<th>Prix</th>
+		<th>Quantité</th>
+		<th>Total</th>
+		<th></th>
+	</tr>
+</thead>
+<tbody>
+	{% for item in items %}
+	<tr>
+		<td>{{ item.produit.nom }}</td>
+		<td>{{ item.produit.prix }} DT</td>
+		<td>{{ item.quantite }}</td>
+		<td>{{ item.produit.prix * item.quantite }} DT</td>
+		<td>
+			<a href="{{ path('supp_prod_panier', {'id': item.produit.idProd}) }}" class="btn btn-danger btn-sm">
+			<i class="fas fa-trash"></i>S</a>
+		</td>
+	</tr>
+	{% endfor %}
+</tbody>
+<tfoot>
+	<tr>
+		<td colspan="3" class="text-right">
+			Total:
+		</td>
+		<th>
+			{{ total }} DT		
+		</th>
+		<td>	
+		<form action="{{ path('app_commandes_new') }}" method="post">
+        	<button type="submit" class="ui huge yellow icon labeled button"><i class="bolt icon"></i>Valider Commande</button>		
+    </form></td>
+	</tr>
+</tfoot>
+</table>
+</div>
+</div>
+{% else %}
+<p>Panier vide</p>    
+{% endif %}
+
+
+
+{% endblock %}

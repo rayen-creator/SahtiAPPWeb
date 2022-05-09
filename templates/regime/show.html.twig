@@ -1,0 +1,50 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Regime{% endblock %}
+
+{% block body %}
+    <h1>Regime</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdRegime</th>
+                <td>{{ regime.idRegime }}</td>
+            </tr>
+            <tr>
+                <th>Objectif</th>
+                <td>{{ regime.objectif }}</td>
+            </tr>
+            <tr>
+                <th>DateDebut</th>
+                <td>{{ regime.dateDebut ? regime.dateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Duree</th>
+                <td>{{ regime.duree }}</td>
+            </tr>
+            <tr>
+                <th>MaxCalories</th>
+                <td>{{ regime.maxCalories }}</td>
+            </tr>
+            <tr>
+                <th>NbRepas</th>
+                <td>{{ regime.nbRepas }}</td>
+            </tr>
+            <tr>
+                <th>IdSpecialiste</th>
+                <td>{{ regime.idSpecialiste }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img style="height: 100px; width: 100px" src="{{ asset('images/regime/'~regime.image) }}"  ></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('regime_index') }}">back to list</a>
+
+    <a href="{{ path('regime_edit', {'idRegime': regime.idRegime}) }}">edit</a>
+
+    {{ include('regime/_delete_form.html.twig') }}
+{% endblock %}

@@ -2,18 +2,20 @@
 
 namespace App\Entity;
 
+
+namespace App\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Captcha\Bundle\CaptchaBundle\Validator\Constraints as CaptchaAssert;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Client
  *
- * @ORM\Table(name="client", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"})}, indexes={@ORM\Index(name="id_coach", columns={"id_coach"}), @ORM\Index(name="id_nutri", columns={"id_nutri"})})
+ * @ORM\Table(name="client", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"})}, indexes={@ORM\Index(name="id_coach", columns={"id_coach"}), @ORM\Index(name="id_nutri", columns={"id_nutri"}), @ORM\Index(name="fk", columns={"id_progclient"})})
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
-
  */
 class Client implements UserInterface
 {
@@ -23,6 +25,7 @@ class Client implements UserInterface
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("post:read")
      */
     private $id;
 
@@ -32,6 +35,8 @@ class Client implements UserInterface
      * @ORM\Column(name="nom", type="string", length=30, nullable=true)
      * @Assert\Type("string")
      *  @Assert\NotBlank(message="Must be filled")
+     *  @Groups("post:read")
+
      */
     private $nom;
 
@@ -41,6 +46,7 @@ class Client implements UserInterface
      * @ORM\Column(name="prenom", type="string", length=30, nullable=true)
      * @Assert\Type("string")
      * @Assert\NotBlank(message="Must be filled")
+     * @Groups("post:read")
      */
     private $prenom;
 
@@ -52,6 +58,7 @@ class Client implements UserInterface
      *     message = "The email '{{ value }}' is not a valid email."
      * )
      *  @Assert\NotBlank(message="Must be filled")
+     * @Groups("post:read")
      */
     private $email;
 
@@ -70,6 +77,7 @@ class Client implements UserInterface
      *     pattern="/^(?=.*[a-z])(?=.*\d).{8,}$/i",
      *     message="Password is required to be minimum 8 chars in length and to include at least one letter and one number."
      * )
+     * @Groups("post:read")
      */
     private $passwd;
 
@@ -85,6 +93,7 @@ class Client implements UserInterface
      *      minMessage = "Address must be at least {{ limit }} characters long",
      *      maxMessage = "Address cannot be longer than {{ limit }} characters"
      * )
+     * @Groups("post:read")
      */
     private $adresse;
 
@@ -92,7 +101,7 @@ class Client implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="datenaiss", type="string", length=30, nullable=true)
-     *
+     *@Groups("post:read")
      */
     private $datenaiss;
 
@@ -100,6 +109,7 @@ class Client implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="img", type="string", length=100, nullable=true)
+     * @Groups("post:read")
      */
     private $img;
 
@@ -107,7 +117,7 @@ class Client implements UserInterface
      * @var bool|null
      *
      * @ORM\Column(name="IsBlocked", type="boolean", nullable=true)
-
+     * @Groups("post:read")
      */
     private $isblocked = '0';
 
@@ -118,6 +128,7 @@ class Client implements UserInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_coach", referencedColumnName="id")
      * })
+     * @Groups("post:read")
      */
     private $idCoach;
 
@@ -128,6 +139,7 @@ class Client implements UserInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_nutri", referencedColumnName="id")
      * })
+     * @Groups("post:read")
      */
     private $idNutri;
 
@@ -137,6 +149,16 @@ class Client implements UserInterface
      * )
      */
     protected $captchaCode;
+
+    /**
+     * @var \Progclient
+     *
+     * @ORM\ManyToOne(targetEntity="Progclient")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_progclient", referencedColumnName="id")
+     * })
+     */
+    private $idProgclient;
 
     public function getCaptchaCode()
     {
@@ -273,6 +295,18 @@ class Client implements UserInterface
         return $this;
     }
 
+    public function setIdProgclient(?Progclient $idProgclient): self
+    {
+        $this->idProgclient = $idProgclient;
+
+        return $this;
+    }
+
+    public function getIdProgclient(): ?Progclient
+    {
+        return $this->idProgclient;
+    }
+
 
     public function getRoles()
     {
@@ -306,4 +340,6 @@ class Client implements UserInterface
     {
         // TODO: Implement eraseCredentials() method.
     }
+
+
 }

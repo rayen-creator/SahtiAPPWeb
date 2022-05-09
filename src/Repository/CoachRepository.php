@@ -21,6 +21,15 @@ class CoachRepository extends ServiceEntityRepository
 
 
 
+    public function findavailablecoach(){
+        $query=$this->getEntityManager()
+            ->createQuery('select e.nom , e.prenom , e.email , e.adresse , e.bio , e.certification , e.img
+             from APP\Entity\entraineur e where e.isblocked=:isblocked')
+            ->setParameter('isblocked',false );
+
+        return $query->getResult();
+    }
+    //**************
 
     public function findPlanBySujet($sujet){
         return $this->createQueryBuilder('Entraineur')

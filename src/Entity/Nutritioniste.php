@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Captcha\Bundle\CaptchaBundle\Validator\Constraints as CaptchaAssert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
@@ -22,6 +23,7 @@ class Nutritioniste implements UserInterface
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("post:read")
      */
     private $id;
 
@@ -30,6 +32,7 @@ class Nutritioniste implements UserInterface
      *
      * @ORM\Column(name="nom", type="string", length=30, nullable=true)
      * @Assert\NotBlank(message="Must be filled")
+     * @Groups("post:read")
      */
     private $nom;
 
@@ -38,6 +41,7 @@ class Nutritioniste implements UserInterface
      *
      * @ORM\Column(name="prenom", type="string", length=30, nullable=true)
      * @Assert\NotBlank(message="Must be filled")
+     * @Groups("post:read")
      */
     private $prenom;
 
@@ -49,6 +53,7 @@ class Nutritioniste implements UserInterface
      *  @Assert\Email(
      *     message = "The email '{{ value }}' is not a valid email."
      * )
+     * @Groups("post:read")
      */
     private $email;
 
@@ -67,6 +72,7 @@ class Nutritioniste implements UserInterface
      *     pattern="/^(?=.*[a-z])(?=.*\d).{8,}$/i",
      *     message="Password is required to be minimum 8 chars in length and to include at least one letter and one number."
      * )
+     * @Groups("post:read")
      */
     private $passwd;
 
@@ -81,6 +87,7 @@ class Nutritioniste implements UserInterface
      *      minMessage = "Address must be at least {{ limit }} characters long",
      *      maxMessage = "Address cannot be longer than {{ limit }} characters"
      * )
+     * @Groups("post:read")
      */
     private $adresse;
 
@@ -95,6 +102,7 @@ class Nutritioniste implements UserInterface
      *      minMessage = "Bio must be at least {{ limit }} characters long",
      *      maxMessage = "Bio cannot be longer than {{ limit }} characters"
      * )
+     * @Groups("post:read")
      */
     private $bio;
 
@@ -109,6 +117,7 @@ class Nutritioniste implements UserInterface
      *      minMessage = "Certification must be at least {{ limit }} characters long",
      *      maxMessage = "Certification cannot be longer than {{ limit }} characters"
      * )
+     * @Groups("post:read")
      */
     private $certification;
 
@@ -116,6 +125,7 @@ class Nutritioniste implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="img", type="string", length=100, nullable=true)
+     * @Groups("post:read")
      */
     private $img;
 
@@ -123,6 +133,7 @@ class Nutritioniste implements UserInterface
      * @var bool|null
      *
      * @ORM\Column(name="IsBlocked", type="boolean", nullable=true)
+     * @Groups("post:read")
      */
     private $isblocked = '0';
 

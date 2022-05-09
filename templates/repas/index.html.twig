@@ -1,0 +1,121 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Repas index{% endblock %}
+
+{% block body %}
+    <div class="text-center">
+        <a type="submit" class="btn btn-primary btn-sm " style="margin:100px"  href="{{ path('impr')}}">  <strong>enregistrer sous forme pdf</strong></a>
+    </div>
+
+    <table id="tableuser" class="table">
+        <thead>
+        <tr>
+            <th><script src="{{ asset('/js/jquery.min.js') }}"></script>
+
+                <input id="search" class="form-control mr-sm-2" type="text" name="search" placeholder="Search ..." aria-label="Search"  >
+                <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+
+            </th>
+        </tr>
+                <th>IdRepas</th>
+                <th>NomRep</th>
+                <th>NbCal</th>
+                <th>Quantite</th>
+                <th>regime</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for repa in repas %}
+            <tr>
+                <td>{{ repa.idRepas }}</td>
+                <td>{{ repa.nomRep }}</td>
+                <td>{{ repa.nbCal }}</td>
+                <td>{{ repa.quantite }}</td>
+                <td> {% for regime in repa.idRegime %}
+                        {{  regime.objectif }}
+                    {% endfor %}</td>
+                <td>
+                    <a href="{{ path('repas_show', {'idRepas': repa.idRepas}) }}">show</a>
+                    <a href="{{ path('repas_edit', {'idRepas': repa.idRepas}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+            $('#bannedCheck').change(function () {
+                if (this.checked) {
+                    $('#notbannedCheck').prop('checked', false);
+                    $('#ActiveCheck').prop('checked', false);
+                    $('#notActiveCheck').prop('checked', false);
+                    $('#withoutFiltre').prop('checked', false);
+
+                    axios.get('/repas/index/ban/1').then((response) => {
+                        $('#AjaxTableUser').html(response.data.template)
+                    });
+                }else{
+                    $('#withoutFiltre').prop('checked', true);
+
+                    axios.get('/repas/index/non_filtre').then((response) => {
+                        $('#AjaxTableUser').html(response.data.template)
+                    });
+                }
+            });
+
+            $('#notbannedCheck').change(function () {
+                if (this.checked) {
+                    $('#bannedCheck').prop('checked', false);
+                    $('#ActiveCheck').prop('checked', false);
+                    $('#notActiveCheck').prop('checked', false);
+                    $('#withoutFiltre').prop('checked', false);
+
+                    axios.get('/repas/index/ban/0').then((response) => {
+                        $('#AjaxTableUser').html(response.data.template)
+                    });
+                }else{
+                    $('#withoutFiltre').prop('checked', true);
+
+                    axios.get('/repas/index/non_filtre').then((response) => {
+                        $('#AjaxTableUser').html(response.data.template)
+                    });
+                }
+            });
+            function search_table(value){
+                $('#tableuser tbody tr').each(function(){
+                    var found = 'false';
+                    $(this).each(function(){
+                        if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                        {
+                            found = 'true';
+                        }
+                    });
+                    if(found == 'true')
+                    {
+                        $(this).show();
+
+                    }
+                    else
+                    {
+                        $(this).hide();
+
+                    }
+                });
+            }
+        });
+    </script>
+    <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2F127.0.0.1%3A8000%2Fuser%2F&layout=button_count&size=small&width=91&height=20&appId" width="91"
+            height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+    <a href="{{ path('repas_new') }}">Create new</a>
+
+{% endblock %}

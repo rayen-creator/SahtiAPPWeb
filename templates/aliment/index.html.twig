@@ -1,0 +1,198 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Aliment index{% endblock %}
+
+{% block body %}
+    <h5> Aliment triés en : </h5>
+    <h6>  ordre croissant selon l'id d'aliments) </h6>
+
+    </thead>
+    <script type="text/javascript">
+        function imprimer_page(){
+            window.print();
+        }
+    </script>
+    <form>
+        <input id="impression"
+               class="js-programmatic-set-val btn btn-outline-primary mr-1 mb-1s" name="impression"
+               type="button" onclick="imprimer_page()" value="Print this page" />
+    </form>
+    </tr>
+    </table>
+    <tr>
+        <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+        </th>
+    </tr>
+    <a style="margin-left: 150px" class="tg-btn" href="" id="idup">Numero (UP) ⬆️</a>
+    <a class="tg-btn" href="" id="iddown">Numero (DOWN) ⬇️</a>
+    <table  class="table" style="width:100%"  id="t">
+
+        <input type="text" id="show" placeholder="recherche par Nom 🔍">
+        <script src="{{ asset('/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+        <div id="fb-root"></div>
+        <tr>
+                <th>IdAliment</th>
+                <th>Nom</th>
+                <th>Type</th>
+                <th>Calories</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+        <tbody id="all">
+
+            {% for aliment in aliments %}
+                <tr>
+                    <td>{{ aliment.idAliment }}</td>
+                    <td>{{ aliment.nom }}</td>
+                    <td>{{ aliment.type }}</td>
+                    <td>{{ aliment.calories }}</td>
+                    <td>{{ aliment.description }}</td>
+                    <td><img style="height: 100px; width: 100px" src="{{ asset('images/aliment/'~aliment.image) }}" ></td>
+                    <td>
+                        <a href="{{ path('aliment_show', {'idAliment': aliment.idAliment}) }}">show</a>
+                        <a href="{{ path('aliment_edit', {'idAliment': aliment.idAliment}) }}">edit</a>
+                    </td>
+                    {% endfor %}
+                    <div class="nk-pagination nk-pagination-center">
+                        {{ knp_pagination_render(aliments) }}
+                    </div>
+                </tr>
+        </tbody>
+            <tbody id="search">
+           </tbody>
+    </table>
+    </div>
+<button class="btn btn-primary btn-toggle-sidebar" data-bs-toggle="offcanvas" data-bs-target="#addEventSidebar" aria-controls="addEventSidebar">
+    <a href="{{ path('aliment_new') }}">Create new</a>
+
+</button>
+    <script
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    </script>
+    <script>
+        $( document ).ready(function() {
+            $("#show").keyup(function(e) {
+                var value = $(this).val();
+                $.ajax({
+                    url : "{{ path('search_back1') }}",
+                    method: "GET",
+                    data: {
+                        searchValue: value,
+                    },
+                    success : function(data){
+                        $('#t tbody#search').empty();
+                        if(data){
+                            $('#t tbody#all').hide();
+                            for (i = 0; i < data.length; i++) {
+
+                                $('#t tbody#search').append('' +
+                                    '<tr><td> '+data[i].idAliment+' </td>' +
+                                    '<td> '+data[i].nom+' </td>' +
+                                    '<td>'+data[i].type+' </td>' +
+                                    '<td>'+data[i].calories+' </td>' +
+                                    '<td>'+data[i].description+' </td>' +
+                                    '<td>'+'<img style="height: 100px; width: 100px" src="/images/aliment/'+data[i].image +'">'+'</td>'+
+                                    '<td><div class="row">'+
+                                    '<div class="col">'+
+                                    '<a class="btn btn-primary" style="margin: 1px" href="/aliment/'+data[i].idAliment+'">show</a>'+
+                                    '<a class="btn btn-primary" style="margin: 1px" href="/aliment/'+data[i].idAliment+'/edit">edit</a>'+
+                                    '</div>'+
+                                    '</div></td>'+
+                                    '</tr>');
+                            };
+                        }
+                        else
+                        {
+
+                            $('#t tbody#all').show();
+                            $('#t tbody#search').empty();
+                            $('#t tbody#search').fadeIn('fast');
+                        }
+                    },
+                });
+                return false;
+            });
+        });
+        $("#idup").click(function(e) {
+            var value3 ="ASC";
+            $.ajax({
+                url :  "{{ path('UPtriEQUIPE') }}",
+                type : 'GET',
+                data: {
+
+                    'order': value3
+                },
+                success : function(data){
+                    $('#t tbody#search').empty();
+
+                    for (i = 0; i < data.length; i++) {
+
+                        $('#t tbody#all').hide();
+                        $('#t tbody#search').append('' +
+                            '<tr><td> '+data[i].idAliment+' </td>' +
+                            '<td> '+data[i].nom+' </td>' +
+                            '<td>'+data[i].type+' </td>' +
+                            '<td>'+data[i].calories+' </td>' +
+                            '<td>'+data[i].description+' </td>' +
+                            '<td>'+'<img style="height: 100px; width: 100px" src="/images/aliment/'+data[i].image +'">'+'</td>'+
+                            '<td><div class="row">'+
+                            '<div class="col">'+
+                            '<a class="btn btn-primary" style="margin: 1px" href="/aliment/'+data[i].idAliment+'">show</a>'+
+                            '<a class="btn btn-primary" style="margin: 1px" href="/aliment/'+data[i].idAliment+'/edit">edit</a>'+
+                            '</div>'+
+                            '</div></td>'+
+                            '</tr>');
+                    }
+                },
+
+
+
+            });
+            return false;});
+        $("#iddown").click(function(e) {
+            var value3 ="DESC";
+            $.ajax({
+                url :  "{{ path('DOWNtriEQUIPE') }}",
+                type : 'GET',
+                data: {
+
+                    'order': value3
+                },
+                success : function(data){
+                    $('#t tbody#search').empty();
+
+                    for (i = 0; i < data.length; i++) {
+
+                        $('#t tbody#all').hide();
+                        $('#t tbody#search').append('' +
+                            '<tr><td> '+data[i].idAliment+' </td>' +
+                            '<td> '+data[i].nom+' </td>' +
+                            '<td>'+data[i].type+' </td>' +
+                            '<td>'+data[i].calories+' </td>' +
+                            '<td>'+data[i].description+' </td>' +
+                            '<td>'+'<img style="height: 100px; width: 100px" src="/images/aliment/'+data[i].image +'">'+'</td>'+
+                            '<td><div class="row">'+
+                            '<div class="col">'+
+                            '<a class="btn btn-primary" style="margin: 1px" href="/aliment/'+data[i].idAliment+'">show</a>'+
+                            '<a class="btn btn-primary" style="margin: 1px" href="/aliment/'+data[i].idAliment+'/edit">edit</a>'+
+                            '</div>'+
+                            '</div></td>'+
+                            '</tr>');
+
+                    }
+                },
+
+
+
+            });
+            return false;});
+    </script>
+
+{% endblock %}
+
+

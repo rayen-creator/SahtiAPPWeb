@@ -1,0 +1,12 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Livraison{% endblock %}
+
+{% block body %}
+    <h1>Passer livraison</h1>
+
+    {{ include('livraison/_form.html.twig') }}
+    
+
+    <a href="{{ path('app_livraison_index') }}">back to list</a>
+{% endblock %}

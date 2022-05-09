@@ -1,0 +1,4 @@
+red button : linear-gradient(from 25% 25% to 100% 100%,#EF2B2B, #781616)
+
+orange button : linear-gradient(from 25% 25% to 100% 100%, #E9CE20, #756710)
+linear-gradient(from 25% 25% to 100% 100%, #92FC07, #497E04)

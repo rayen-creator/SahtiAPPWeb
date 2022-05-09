@@ -1,0 +1,9 @@
+{% extends 'base-back.html.twig' %}
+{% block body %}
+<div class="card p-3">
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">Valider commande</button>
+{{ form_end(form) }}
+</div>
+{% endblock %}

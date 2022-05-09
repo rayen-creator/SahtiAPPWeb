@@ -1,0 +1,34 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}detail{% endblock %}
+
+{% block body %}
+<div class="content-wrapper">
+
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+
+        <div class="container">
+            <div class="card">
+                <div class="wrapper row">
+                    <div class="col-md-6">
+                        <img class="img-rounded" src="{{ asset('images/'~produit.image) }}" alt="" width="300" height="200" style="margin: 20px">
+                    </div>
+                    <div class="details col-md-6">
+                        <h3 class="product-title">{{ produit.nom }}</h3>
+                        {{ produit.descprod }}
+                        <h4 class="price">current price: <span>{{ produit.prix }}</span></h4>
+                        <div class="action">
+                            <button class="btn btn-primary"   type="button">add to cart</button>
+                            <button class="btn btn-primary" type="button">return</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

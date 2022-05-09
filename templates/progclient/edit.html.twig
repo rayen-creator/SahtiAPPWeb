@@ -1,0 +1,13 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Edit Progclient{% endblock %}
+
+{% block body %}
+    <h1>Edit Progclient</h1>
+
+    {{ include('progclient/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_progclient_index') }}">back to list</a>
+
+    {{ include('progclient/_delete_form.html.twig') }}
+{% endblock %}

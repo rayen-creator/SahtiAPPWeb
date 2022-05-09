@@ -1,0 +1,13 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Edit Programmeentraineur{% endblock %}
+
+{% block body %}
+    <h1>Edit Programmeentraineur</h1>
+
+    {{ include('programmeentraineur/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_programmeentraineur_index') }}">back to list</a>
+
+    {{ include('programmeentraineur/_delete_form.html.twig') }}
+{% endblock %}

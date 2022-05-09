@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Service{% endblock %}
+
+{% block body %}
+
+    <div class="layout_padding popular_section">
+        <div class="container">
+            <h1 class="popular_taital"> <span style="border-bottom: 5px solid #4bc714;"></span></h1>
+            <div id="main_slider" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="popular_section_2">
+                            <div class="slider_img"><img src="{{ asset('images/regime/'~regime.image) }}" style="max-width: 50%;"></div>
+
+                            <h2 class="electronic_text">{{ regime.idRegime }}</h2>
+                            <p class="contrary_text">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th>Objectif</th>
+                                    <td>{{ regime.objectif }}</td>
+                                </tr>
+                                <tr>
+                                    <th>DateDebut</th>
+                                    <td>{{ regime.dateDebut ? regime.dateDebut|date('Y-m-d') : '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Duree</th>
+                                    <td>{{ regime.duree }}</td>
+                                </tr>
+                                <tr>
+                                    <th>MaxCalories</th>
+                                    <td>{{ regime.maxCalories }}</td>
+                                </tr>
+                                <tr>
+                                    <th>NbRepas</th>
+                                    <td>{{ regime.nbRepas }}</td>
+                                </tr>
+                                <tr>
+                                    <th>IdSpecialiste</th>
+                                    <td>{{ regime.idSpecialiste }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Repas</th>
+                                    <td>
+                                        {% for repa in regime.repas %}
+                                            <a style="color: #0a0a0a;" href="{{ path('repas_showfront',{'idRepas': repa.idRepas}) }}">
+                                                {{ repa.nbCal  }} ,
+                                            </a>
+
+                                        {% endfor %}</td>
+                                </tr>
+
+
+
+                                </tbody>
+                            </table>
+
+                            </p>
+                            <button class="view_bt"><a href="{{ path('regime_front') }}">Retour à la liste</a></button>
+
+
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
+

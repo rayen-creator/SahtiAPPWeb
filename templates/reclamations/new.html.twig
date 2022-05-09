@@ -1,0 +1,22 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}New Reclamations{% endblock %}
+
+{% block body %}
+    <h1>Create new Reclamations</h1>
+<div class="card p-3">
+    {{ include('reclamations/_form.html.twig') }}
+     <div class="form-group">
+                        {{ form_widget(form.titre, { 'attr': {'class': 'form-control'} }) }}
+                        <div class="form-error">
+                        {{ form_errors(form.titre) }}
+                        </div>
+                    </div>
+    <div class="form-group">
+                        {{ form_widget(form.file, { 'attr': {'class': 'form-control'} }) }}
+                        {{ form_errors(form.file) }}
+                    </div>
+
+</div>
+    <a href="{{ path('app_reclamations_index') }}">back to list</a>
+{% endblock %}

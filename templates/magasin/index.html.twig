@@ -1,0 +1,100 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Hello MagasinController!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+
+    <div class="container">
+        <div class="row" style="margin-left: 20px;margin-top: 100px">
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                <form class="align-content-center" action="{{ path("search_mag") }}" method="get" style="margin: 10px; margin-left: 200px">
+                    <label>  <input value="" id="search" name="nom" type="text" class="form-control border-0 shadow-none " placeholder="search .. "> </label>
+                    <button class="btn btn-primary  ">search</button>
+                </form>
+                <form action="{{ path("filter") }}" method="get">
+                    <label>  <input value="" id="search" name="prix"  class="form-control " placeholder="Votre Budget maximale ... " style="width: 300px"> </label>
+                    <button class="btn btn-primary" > OK </button>
+                </form>
+            </div>
+            {% for produit in produits %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card" style="margin-bottom: 20px">
+                        <img class="img-rounded" src="images/{{ produit.image }}" alt="" width="300" height="200" style="margin: 20px">
+                        <div class="card-body" style="margin-left: 80px">
+                            <p>
+                            <h5 style="font-size: large; -webkit-text-decoration-style: solid" class="card-title"> {{ produit.nom }}</h5>
+                            <h5 style="font-size: large; text-decoration-thickness: auto" class="card-title"> PRIX:{{ produit.prix }}</h5>
+                            </p>
+
+                        </div>
+
+                        <div class="card-footer" style="background-color: #373d3f " >
+                            <div class="row">
+                                <div class="col">
+                                    <button type="button" class="btn btn-primary" style=" margin-top: 20px"  ><span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart</button>
+                                </div>
+                                <div class="col">
+                                    <a class="btn btn-primary btn" style=" margin-top: 20px"  data-product-name="{{ produit.nom }}" data-product-img="images/{{ produit.image }}" data-product-price="{{ produit.prix }}" data-product-descp="{{ produit.descprod }}" data-product-qte="{{ produit.quantite }}" data-toggle="modal"  data-target="#{{ produit.idProd }}"><i class="fa fa-search"></i> Quick View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade product_view" id="{{ produit.idProd }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a href="#" data-dismiss="modal" class="class pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                                <h3 class="modal-title">detail</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6 product_img">
+                                        <img id=" data-product-img" src="images/{{ produit.image }}" class="img-responsive">
+                                    </div>
+                                    <div class="col-md-6 product_content">
+                                        <h1 id="data-product-name" >{{ produit.nom }}</h1>
+                                        <p id="modal-product-desc">Description : {{ produit.descprod| raw }}</p>
+                                        <h3 id="data-product-price">Prix : {{ produit.prix }}</h3>
+                                        <h3 id="data-product-qte">Quantité en stock : {{ produit.quantite }}</h3>
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-12">
+                                                <div class="section" style="padding-bottom:20px;">
+                                                    <h6 class="title-attr"><small>quantité</small></h6>
+                                                    <div>
+                                                        <div class="btn-minus"><span class="glyphicon glyphicon-minus"></span></div>
+                                                        <input value="1" />
+                                                        <div class="btn-plus"><span class="glyphicon glyphicon-plus"></span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end col -->
+                                        </div>
+                                        <div class="space-ten"></div>
+                                        <div class="btn-ground">
+                                            <a href="{{ path('cart_add', {'id': produit.idProd}) }}" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <nav aria-label="Page navigation example"  style="margin-left: 350px">
+                <ul class="pagination justify-content-center">
+                    {{ knp_pagination_render(produits) }}
+                </ul>
+            </nav>
+
+
+
+        </div>
+    </div>
+{% endblock %}

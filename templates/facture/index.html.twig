@@ -1,0 +1,96 @@
+{% extends 'baseFacture.html.twig' %}
+
+{% block title %}Facture{% endblock %}
+
+{% block body %}
+<div class="cs-invoice cs-style1">
+      <div class="cs-invoice_in" id="download_section">
+        <div class="cs-invoice_head cs-type1 cs-mb25">
+          <div class="cs-invoice_left">
+            <p class="cs-invoice_number cs-primary_color cs-mb0 cs-f16"><b class="cs-primary_color">Facture No:</b> #TN000{{ numeroFacture }}</p>
+          </div>
+          <div class="cs-invoice_right cs-text_right">
+            <div class="cs-logo cs-mb5"><img src="{{ asset('assets/img/logo.png') }}" width="15%" height="15%" alt="Logo"></div>
+          </div>
+        </div>
+        <div class="cs-invoice_head cs-mb10">
+          <div class="cs-invoice_left">
+            <b class="cs-primary_color">Facture pour:</b>
+            <p>
+              Akrimi Iheb <br>
+              Tunis <br><br>
+              Tunisie
+            </p>
+          </div>
+          <div class="cs-invoice_right cs-text_right">
+            <b class="cs-primary_color">Payer pour:</b>
+            <p>
+              Sahti <br>
+              Ghazela , Ariana <br>
+              Tunisie <br>
+              contact@sahti.com
+            </p>
+          </div>
+        </div>
+        <div class="cs-table cs-style1">
+          <div class="cs-round_border">
+            <div class="cs-table_responsive">
+              
+              <table>
+                <thead>
+                  <tr>
+                    <th class="cs-semi_bold cs-primary_color cs-focus_bg cs-f16 cs-border_top" colspan="4">Informations de commande</th>
+                  </tr>
+                  <tr>
+                    <td class="cs-width_3 cs-primary_color cs-semi_bold">N°</td>
+                    <td class="cs-width_3 cs-primary_color cs-semi_bold">Produit</td>
+                    <td class="cs-width_3 cs-primary_color cs-semi_bold">Qte</td>
+                    <td class="cs-width_3 cs-primary_color cs-semi_bold cs-text_right">Montant total</td>
+                  </tr>
+                </thead>
+                <tbody>
+                {% set count = 0 %}
+                {% set total = 0 %}
+                 {% for p in produits %}
+                  {% set count = count + 1 %}
+                  <tr>
+                 
+                    <td class="cs-width_3">{{ count }}</td>
+                    <td class="cs-width_3">{{ p.nom }}</td>
+                    <td class="cs-width_3">1</td>
+                    <td class="cs-width_3 cs-text_right">{{ p.prix }} DT</td>
+                    {% set total = total + p.prix  %}
+                    
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              
+              </div>
+            </div>
+          </div>
+          <div class="cs-invoice_footer">
+            <div class="cs-left_footer cs-mobile_hide"></div>
+            <div class="cs-right_footer">
+              <table>
+                <tbody>
+                  <tr class="cs-border_none">
+                    <td class="cs-width_3 cs-border_top_0 cs-bold cs-f16 cs-primary_color">Montant total</td>
+                    <td class="cs-width_3 cs-border_top_0 cs-bold cs-f16 cs-primary_color cs-text_right">{{ total  }} DT</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-3 float-right">
+            {% if qrCode %}
+                <img src="{{ qrCode }}" alt="qr-code">
+            {% endif %}
+            ne9sa bootstrap CDN
+        </div>
+        </div>
+      </div>
+{% endblock %}

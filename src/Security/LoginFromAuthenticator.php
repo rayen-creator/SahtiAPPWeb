@@ -74,14 +74,13 @@ class LoginFromAuthenticator extends AbstractFormLoginAuthenticator implements P
         $usera = $this->entityManager->getRepository(Admin::class)->findOneBy(['email' => $credentials['email']]);
         $usere = $this->entityManager->getRepository(Entraineur::class)->findOneBy(['email' => $credentials['email']]);
         $usern = $this->entityManager->getRepository(Nutritioniste::class)->findOneBy(['email' => $credentials['email']]);
-
+//        $user=$this->entityManager->getRepository(Admin::class)->findOneBy(['email' => $credentials['email']]);
 
         if ($userc !=null ){
             $user=$userc;
         }else if ($usera != null){
             $user=$usera;
-        }
-        if ($usere != null){
+        }else if ($usere != null){
             $user=$usere;
         }else if ($usern != null){
             $user=$usern;

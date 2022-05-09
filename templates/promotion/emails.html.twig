@@ -1,0 +1,72 @@
+
+{% block body %}
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td align="center">
+                <table width="650" border="0" cellspacing="0" cellpadding="0" class="mobile-shell">
+                    <tr>
+                        <td class="td" style="width:650px; min-width:650px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td background="images/free_bg.jpg" bgcolor="#a3854b" valign="top" height="420" class="bg">
+                                        <!--[if gte mso 9]>
+                                        <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:650px; height: 420px">
+                                            <v:fill type="frame" src="images/free_bg.jpg" color="#a3854b" />
+                                            <v:textbox inset="0,0,0,0">
+                                        <![endif]-->
+                                        <div>
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td class="content-spacing" width="30" style="font-size:0pt; line-height:0pt; text-align:left;"></td>
+                                                    <td style="padding: 40px 0px;" class="p30-0">
+                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                            <tr>
+                                                                <td class="box1" bgcolor="#ffffff" align="center" style="padding:45px 30px;">
+                                                                    <table border="0" cellspacing="0" cellpadding="0">
+                                                                        <tr>
+                                                                            <td class="h5-2 center pb20" style="color:#000000; font-family:'Playfair Display', Georgia, serif; font-size:26px; line-height:30px; text-transform:uppercase; text-align:center; padding-bottom:20px;"><multiline>SAHTI!</multiline></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="h2 center pb20" style="color:#000000; font-family:'Playfair Display', Georgia, serif; font-size:50px; line-height:54px; font-weight:bold; text-transform:uppercase; text-align:center; padding-bottom:20px;"><multiline> Les soldes ont commencé! {{ porcentage }}% </multiline></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text4 center pb30" style="color:#979797; font-family:'Raleway', Arial,sans-serif; font-size:20px; line-height:24px; text-align:center; padding-bottom:30px;"><multiline>NE RATEZ PAS</multiline></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text4 center pb30" style="color:#979797; font-family:'Raleway', Arial,sans-serif; font-size:20px; line-height:24px; text-align:center; padding-bottom:30px;"><multiline>{{ desc |raw}}</multiline></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <img src="{{ email.image('@images/'~pic)}}" class="img-circle" style="alignment: center">
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td align="center">
+                                                                                <table width="140" border="0" cellspacing="0" cellpadding="0">
+                                                                                    <tr>
+                                                                                        <td class="text-button black-button" style="font-family:'Raleway', Arial, sans-serif; font-size:12px; line-height:16px; text-align:center; text-transform:uppercase; border:2px solid #ffffff; padding:12px 20px; background:#000000; color:#ffffff;"><multiline><a href="http://127.0.0.1:8000/magasin" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none;"><span class="link-white" style="color:#ffffff; text-decoration:none;">Achetez maintenant</span></a></multiline></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td class="content-spacing" width="30" style="font-size:0pt; line-height:0pt; text-align:left;"></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <!--[if gte mso 9]>
+                                        </v:textbox>
+                                        </v:rect>
+                                        <![endif]-->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

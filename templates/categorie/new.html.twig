@@ -1,0 +1,38 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}New Categorie{% endblock %}
+
+{% block body %}
+<div class="container-xxl flex-grow-1 container-p-y">
+
+
+    <div class="col-md-6">
+        <div class="card mb-4 " >
+            <h5 class="card-header">Ajouter Un Categorie</h5>
+            {{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+            <div class="card-body">
+            <div>
+                <label for="defaultFormControlInput" class="form-label">Titre</label>
+                {{ form_widget(form.titre,{'attr':{'class':'form-control'}})}}
+
+            </div>
+                {{ form_errors(form.titre,{'attr':{'class':'text-danger'}}) }}
+                <div>
+                    <label for="defaultFormControlInput" class="form-label">image</label>
+                    {{ form_widget(form.imgCat,{'attr':{'class':'form-control'}})}}
+                </div>
+                {{ form_errors(form.imgCat,{'attr':{'class':'text-danger'}}) }}
+                <div class="row " style="margin-top: 20px">
+                    <div class="row " style="margin-left: 175px">
+
+                        <div class="col">
+                            {{form_widget(form.save,{'attr':{'class':'btn btn-primary'}}) }}
+                        </div>
+                        <div class="col">
+
+                        </div>
+                        {{ form_end(form) }}
+                                </div>
+                    <div class="row " style="margin-top: 20px">
+                        <a class="btn btn-primary" href="{{ path('app_categorie_index') }}">back to list</a>
+{% endblock %}

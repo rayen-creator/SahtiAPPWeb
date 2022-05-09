@@ -1,0 +1,115 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Reclamations{% endblock %}
+
+{% block body %}
+    <h1>Reclamations</h1>
+    <div class="sidebar-search">
+
+                <div class="input-group custom-search-form">
+
+                    <input type="text" id="search" class="form-control" placeholder="Search here">
+                </div>
+                <!-- /input-group -->
+            </div>
+           <!-- <ul class="nav" id="side-menu">
+                <li>
+                    <a href="#"> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level" id="entitiesNav">
+                    </ul>
+                </li>
+            </ul><br><br><br><br>-->
+
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+            <script type="text/javascript">
+                jQuery(document).ready(function() {
+                    var searchRequest = null;
+                    $("#search").keyup(function() {
+                        var minlength = 1;
+                        var that = this;
+                        var value = $(this).val();
+                        var entitySelector = $("#entitiesNav").html('');                        
+                        if (value.length >= minlength ) {
+                            if (searchRequest != null)
+                                searchRequest.abort();
+                            searchRequest = $.ajax({
+                                type: "GET",
+                                url: "{{ path('searchReclamation') }}",
+                                data: {
+                                    'q' : value
+                                },
+                                dataType: "text",
+                                success: function(msg){
+                                    //we need to check if the value is the same
+                                    if (value===$(that).val()) {
+                                        var result = JSON.parse(msg);
+                                        $.each(result, function(key, arr) {
+                                            $.each(arr, function(id, value) {
+                                                if (key === 'reclamations') {
+                                                    if (id !== 'error') {
+                                                        console.log(value[1]);
+                                                        console.log(value[0]);
+                                                        entitySelector.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td><td>'+value[3]+'</td>'+'</td><td>'+value[4]+'</td>'+'</td><td>'+value[5]+'</td>'+'</td><td>'+value[6]+'</td></tr>');
+                                                       //entitySelector.append(' <div class="row"> <div class="col-lg-8 p-0"><div class="blog-item"> <div class="bi-pic"> <img src="public/picture/'+value[1]+'"></div> <div class="bi-text">  <h5><a href="#">'+value[1]+'</a></h5> <p><a  style="border-radius: 50% 20% / 10% 40%;background: #f36100;float: right;" class="p-1 mb-1  text-white " href="/detailRegime/'+id+'"> Détails </a> </p></div> </div>');
+                                                    } else {
+                                                        entitySelector.append('<li class="errorLi">'+value+'</li>');
+                                                    }
+                                                }
+                                            });
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
+            </script>
+            <div class="row">
+<div class="card">
+  <h5 class="card-header"></h5>
+  <div class="table-responsive text-nowrap">
+  <div class="row">
+  <div class="col-md-9"></div>
+    <div class="col-md-3">
+    
+      <a class="btn btn-success m-3" href="{{ path('app_reclamations_new') }}">Ajouter réclamation</a>
+      </div>
+    
+
+  </div>
+    <table class="table" width="100%">
+        <thead>
+            <tr>            
+                <th>Numreclamation</th>
+                <th>Titre</th>
+                <th>Type</th>            
+                <th>Cloturer</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody id="entitiesNav">
+        
+        {% for reclamation in reclamations %}
+            <tr>           
+                <td>{{ reclamation.numreclamation }}</td>
+                <td>{{ reclamation.titre }}</td>
+                <td>{{ reclamation.type }}</td>
+                <td>{{ reclamation.cloturer ? 'Cloturé' : 'Non cloturé' }}</td>
+                <td>
+                    <a href="{{ path('app_reclamations_show', {'id': reclamation.id}) }}">Afficher</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">Aucune réclamation</td>
+            </tr>
+        {% endfor %}
+    {{ knp_pagination_render(reclamations) }}    
+        </tbody>
+        
+    </table>
+   </div>
+   </div>
+   </div>
+{% endblock %}

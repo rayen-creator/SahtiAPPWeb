@@ -1,0 +1,30 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Progclient{% endblock %}
+
+{% block body %}
+    <h1>Progclient</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ progclient.id }}</td>
+            </tr>
+            <tr>
+                <th>Idprog</th>
+                <td>{{ progclient.idprog }}</td>
+            </tr>
+            <tr>
+                <th>Iduser</th>
+                <td>{{ progclient.iduser }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_progclient_index') }}">back to list</a>
+
+    <a href="{{ path('app_progclient_edit', {'id': progclient.id}) }}">edit</a>
+
+    {{ include('progclient/_delete_form.html.twig') }}
+{% endblock %}

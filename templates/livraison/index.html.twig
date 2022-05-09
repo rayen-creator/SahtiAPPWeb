@@ -1,0 +1,41 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Livraison{% endblock %}
+
+{% block body %}
+    <h1>liste des livraisons</h1>
+
+   <div class="card">
+  <h5 class="card-header">Liste des livraisons</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead>
+            <tr>
+                <th>Livré</th>
+                <th>Commandé le</th>
+                <th>Livré?</th>
+                <th>Etat commande (payé/non payé)</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for livraison in livraisons %}
+            <tr>
+                <td>{{ livraison.commande.etat }}</td>
+                <td>{{ livraison.createdAt ? livraison.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ livraison.modifiedAt ? livraison.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_livraison_show', {'id': livraison.id}) }}">show</a>
+                    <a href="{{ path('app_livraison_edit', {'id': livraison.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Livraison vide</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+    <a href="{{ path('app_livraison_new') }}">Create new</a>
+{% endblock %}

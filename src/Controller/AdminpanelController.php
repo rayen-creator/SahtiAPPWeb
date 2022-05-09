@@ -44,13 +44,13 @@ class AdminpanelController extends AbstractController
     }
 
     /**
-     * @Route("/adminpanel/searchclient", name="search")
+     * @Route("/adminpanel/searchclient", name="searchclient")
      */
     public function searchclient(Request $request)
     {
         $repository = $this -> getDoctrine() -> getRepository(Client::class);
         $requestString = $request->get('searchValue');
-        $donneeE = $repository->findPlanBySujet($requestString);
+        $donneeE = $repository->findByPrenom($requestString);
         return $this->render('adminpanel/utilajaxclient.html.twig', [
             'donneeE' => $donneeE,
         ]);

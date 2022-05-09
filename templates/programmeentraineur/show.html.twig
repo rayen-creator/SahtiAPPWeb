@@ -1,0 +1,34 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Programmeentraineur{% endblock %}
+
+{% block body %}
+    <h1>Programmeentraineur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ programmeentraineur.id }}</td>
+            </tr>
+            <tr>
+                <th>Idexercice</th>
+                <td>{{ programmeentraineur.idexercice }}</td>
+            </tr>
+            <tr>
+                <th>Nompack</th>
+                <td>{{ programmeentraineur.nompack }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ programmeentraineur.type }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_programmeentraineur_index') }}">back to list</a>
+
+    <a href="{{ path('app_programmeentraineur_edit', {'id': programmeentraineur.id}) }}">edit</a>
+
+    {{ include('programmeentraineur/_delete_form.html.twig') }}
+{% endblock %}

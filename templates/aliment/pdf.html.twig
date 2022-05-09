@@ -1,0 +1,33 @@
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+    <th>IdAliment</th>
+    <th>Nom</th>
+    <th>Type</th>
+    <th>Calories</th>
+    <th>Description</th>
+    <th>Image</th>
+    <th>actions</th>
+</tr>
+</thead>
+<tbody>
+{% for aliment in aliments %}
+<tr>
+    <td>{{ aliment.id }}</td>
+    <td>{{ aliment.nom }}</td>
+    <td>{{ aliment.type }}</td>
+    <td>{{ aliment.calories }}</td>
+    <td>{{ aliment.description }}</td>
+    <td><img style="height: 100px; width: 100px" src="{{ asset('images/aliment/'~aliment.image) }}" ></td>
+    <td>
+        <a href="{{ path('aliment_show', {'id': aliment.id}) }}">show</a>
+        <a href="{{ path('aliment_edit', {'id': aliment.id}) }}">edit</a>
+    </td>
+</tr>
+{% else %}
+    <tr>
+        <td colspan="5">no records found</td>
+    </tr>  {% endfor %}
+</tbody>
+</table>

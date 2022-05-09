@@ -1,0 +1,11 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}New Progclient{% endblock %}
+
+{% block body %}
+    <h1>Create new Progclient</h1>
+
+    {{ include('progclient/_form.html.twig') }}
+
+    <button type="button" class="btn btn-success " name="button" style="margin-left: 10px; color:white;"> <a href="{{ path('app_progclient_index') }}">back to list</a></button>
+{% endblock %}

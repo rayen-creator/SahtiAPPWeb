@@ -1,0 +1,16 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Modifier Reclamations{% endblock %}
+
+{% block body %}
+<div class="card p-3">
+
+    <h1>Modifier Reclamation</h1>
+
+    {{ include('reclamations/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+
+    <a href="{{ path('app_reclamations_index') }}">Retour à la liste</a>
+
+    {{ include('reclamations/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

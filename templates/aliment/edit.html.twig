@@ -1,0 +1,13 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Edit Aliment{% endblock %}
+
+{% block body %}
+    <h1>Edit Aliment</h1>
+
+    {{ include('aliment/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('aliment_index') }}">back to list</a>
+
+    {{ include('aliment/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,30 @@
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+        <th scope="col">IdRepas</th>
+        <th scope="col">NomRep</th>
+        <th scope="col">NbCal</th>
+        <th scope="col">Quantite</th>
+        <th scope="col">regime</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for repa in repas %}
+        <tr>
+            <td>{{ repa.idRepas }}</td>
+            <td>{{ repa.nomRep }}</td>
+            <td>{{ repa.nbCal }}</td>
+            <td>{{ repa.quantite }}</td>
+            <td> {% for regime in repa.idRegime %}
+                    {{  regime.objectif }}
+
+                {% endfor %}</td>
+
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="5">no records found</td>
+        </tr>  {% endfor %}
+    </tbody>
+</table>

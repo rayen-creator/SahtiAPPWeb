@@ -1,0 +1,54 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Commandes{% endblock %}
+
+{% block body %}
+    <h1>Commandes</h1>
+<div class="card">
+  <h5 class="card-header"></h5>
+  <div class="row">
+    <div class="col-md-5">
+        <a href="#" class="btn btn-success">Passer à la livraison</a>
+    </div>
+  </div>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+        <tbody>
+            
+            <tr>
+                <th>Numéro commande</th>
+                <td>{{ commande.numCmd }}</td>
+            </tr>
+            <tr>
+                <th>MontantCommande</th>
+                <td>{{ commande.montantCmd }} DT</td>
+            </tr>
+            <tr>
+                <th>Commentaire</th>
+                <td>{{ commande.commentaire }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ commande.etat ? 'Validé' : 'Non validé' }}</td>
+            </tr>
+            <tr>
+                <th>Produits commandés</th>
+                
+                <td>{% for produit in produits %} <img src="{{ asset('Upload/')}}{{ produit.0.image }}"alt=""style="width: 200px;height:200px">{% endfor %}</td>
+            </tr>
+            <tr>
+                <th>ModePay</th>
+                <td>{{ commande.modePay }}</td>
+            </tr>
+            <tr>
+                 </tr>
+        
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_commandes_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('app_commandes_edit', {'id': commande.id}) }}">Valider</a>
+
+    {{ include('commandes/_delete_form.html.twig') }}
+{% endblock %}

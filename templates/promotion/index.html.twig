@@ -1,0 +1,58 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Promotion index{% endblock %}
+
+{% block body %}
+<div class="content-wrapper">
+
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+
+
+        <div class="card">
+            <h1 class="card-header">table des promotion</h1>
+            <div class="table">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>IdProm</th>
+                            <th>Titre</th>
+                            <th>Porcentage</th>
+                            <th>Ancienprix</th>
+                            <th>Image</th>
+                            <th>Descprom</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                    <tr class="table-default">
+                    {% for promotion in promotions %}
+                        <tr>
+                            <td>{{ promotion.idProm }}</td>
+                            <td>{{ promotion.titre }}</td>
+                            <td>{{ promotion.porcentage }}</td>
+                            <td>{{ promotion.ancienprix }}</td>
+                        <td><img class="img-rounded" src="{{ asset('images/'~promotion.image) }}" alt="" width="100" height="100" style="margin: 20px"></td>
+                            <td>{{ promotion.descprom| raw }}</td>
+                            <td>
+                                <a class="btn btn-primary" style="margin: 1px" href="{{ path('app_promotion_show', {'idProm': promotion.idProm}) }}">show</a>
+                                <a class="btn btn-primary" style="margin: 1px" href="{{ path('app_promotion_edit', {'idProm': promotion.idProm}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <a class="btn btn-primary" href="{{ path('app_promotion_new') }}">Create new</a>
+            <nav aria-label="Page navigation example"  style="align-content: center">
+                <ul class="pagination justify-content-center">
+                    {{ knp_pagination_render(promotions) }}
+                </ul>
+            </nav>
+{% endblock %}

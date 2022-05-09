@@ -1,0 +1,38 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Suivieevolution{% endblock %}
+
+{% block body %}
+    <h1>Suivieevolution</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ suivieevolution.id }}</td>
+            </tr>
+            <tr>
+                <th>Iduser</th>
+                <td>{{ suivieevolution.iduser }}</td>
+            </tr>
+            <tr>
+                <th>Poids</th>
+                <td>{{ suivieevolution.poids }}</td>
+            </tr>
+            <tr>
+                <th>Datedebutprogramme</th>
+                <td>{{ suivieevolution.datedebutprogramme ? suivieevolution.datedebutprogramme|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Dateevolution</th>
+                <td>{{ suivieevolution.dateevolution ? suivieevolution.dateevolution|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_suivieevolution_index') }}">back to list</a>
+
+    <a href="{{ path('app_suivieevolution_edit', {'id': suivieevolution.id}) }}">edit</a>
+
+    {{ include('suivieevolution/_delete_form.html.twig') }}
+{% endblock %}

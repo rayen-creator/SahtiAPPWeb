@@ -1,0 +1,41 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Suivie evolution index{% endblock %}
+
+{% block body %}
+    <h1>Suivie evolution </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Iduser</th>
+                <th>Poids</th>
+                <th>Datedebutprogramme</th>
+                <th>Dateevolution</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for suivieevolution in suivieevolutions %}
+            <tr>
+                <td>{{ suivieevolution.id }}</td>
+                <td>{{ suivieevolution.iduser }}</td>
+                <td>{{ suivieevolution.poids }}</td>
+                <td>{{ suivieevolution.datedebutprogramme ? suivieevolution.datedebutprogramme|date('Y-m-d') : '' }}</td>
+                <td>{{ suivieevolution.dateevolution ? suivieevolution.dateevolution|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_suivieevolution_show', {'id': suivieevolution.id}) }}">show</a>
+                    <a href="{{ path('app_suivieevolution_edit', {'id': suivieevolution.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_suivieevolution_new') }}">Create new</a>
+{% endblock %}
