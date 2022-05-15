@@ -10,6 +10,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Captcha\Bundle\CaptchaBundle\Validator\Constraints as CaptchaAssert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Client
@@ -159,6 +161,86 @@ class Client implements UserInterface
      * })
      */
     private $idProgclient;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commandes::class, mappedBy="client", orphanRemoval=false)
+     */
+    private $commandes;
+     /**
+     * @ORM\OneToMany(targetEntity=Reclamations::class, mappedBy="client", orphanRemoval=false)
+     */
+    private $reclamations;
+
+     /**
+     * @ORM\OneToMany(targetEntity=Livraison::class, mappedBy="client")
+     */
+    private $livraisons;
+
+    public function __construct()
+    {
+        $this->commandes = new ArrayCollection();
+        $this->reclamations = new ArrayCollection();
+        $this->livraisons = new ArrayCollection();
+    }
+       /**
+     * @return Collection<int, Commandes>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commandes $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commandes $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getClient() === $this) {
+                $commande->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reclamations>
+     */
+    public function getReclamations(): Collection
+    {
+        return $this->reclamations;
+    }
+
+    public function addReclamation(Reclamations $reclamation): self
+    {
+        if (!$this->reclamations->contains($reclamation)) {
+            $this->reclamations[] = $reclamation;
+            $reclamation->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReclamation(Reclamations $reclamation): self
+    {
+        if ($this->reclamations->removeElement($reclamation)) {
+            // set the owning side to null (unless already changed)
+            if ($reclamation->getClient() === $this) {
+                $reclamation->setClient(null);
+            }
+        }
+
+        return $this;
+    }
 
     public function getCaptchaCode()
     {

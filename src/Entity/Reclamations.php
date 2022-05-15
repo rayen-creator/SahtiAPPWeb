@@ -26,25 +26,13 @@ class Reclamations
     private $id;
 
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="idEntraineur", type="integer", nullable=true)
+     * @param int $id
      */
-    private $identraineur;
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="idNutritionniste", type="integer", nullable=true)
-     */
-    private $idnutritionniste;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="idClient", type="integer", nullable=true)
-     */
-    private $idclient;
 
     /**
      * @var string|null
@@ -118,6 +106,30 @@ class Reclamations
      */
     public  $file;
 
+   /**
+    * @var int 
+     * @ORM\Column(name="idClient", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="commandes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $client;
+
+    /**
+     * @var int 
+     * @ORM\Column(name="idNutritionniste", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity=Nutritioniste::class, inversedBy="reclamations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $nutritioniste;
+
+    /**
+     * @var int 
+     * @ORM\Column(name="idEntraineur", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity=Entraineur::class, inversedBy="reclamations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $coach;
+
 
     public function getWebpath(){
 
@@ -156,36 +168,36 @@ class Reclamations
 
     public function getIdentraineur(): ?int
     {
-        return $this->identraineur;
+        return $this->coach;
     }
 
-    public function setIdentraineur(?int $identraineur): self
+    public function setIdentraineur(?int $coach): self
     {
-        $this->identraineur = $identraineur;
+        $this->coach = $coach;
 
         return $this;
     }
 
     public function getIdnutritionniste(): ?int
     {
-        return $this->idnutritionniste;
+        return $this->nutritioniste;
     }
 
-    public function setIdnutritionniste(?int $idnutritionniste): self
+    public function setIdnutritionniste(?int $nutritioniste): self
     {
-        $this->idnutritionniste = $idnutritionniste;
+        $this->nutritioniste = $nutritioniste;
 
         return $this;
     }
 
     public function getIdclient(): ?int
     {
-        return $this->idclient;
+        return $this->client;
     }
 
-    public function setIdclient(?int $idclient): self
+    public function setIdclient(?int $client): self
     {
-        $this->idclient = $idclient;
+        $this->client = $client;
 
         return $this;
     }
@@ -335,6 +347,41 @@ class Reclamations
     public function setFile($file): void
     {
         $this->file = $file;
+    }
+    public function getClient(): ?int
+    {
+        return $this->client;
+    }
+
+    public function setClient(int $client): self
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    public function getNutritioniste(): ?Nutritioniste
+    {
+        return $this->nutritioniste;
+    }
+
+    public function setNutritioniste(?Nutritioniste $nutritioniste): self
+    {
+        $this->nutritioniste = $nutritioniste;
+
+        return $this;
+    }
+
+    public function getCoach(): ?Entraineur
+    {
+        return $this->coach;
+    }
+
+    public function setCoach(?Entraineur $coach): self
+    {
+        $this->coach = $coach;
+
+        return $this;
     }
 
 }

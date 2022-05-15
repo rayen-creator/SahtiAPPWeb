@@ -21,6 +21,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 
@@ -135,7 +136,31 @@ class AlimentController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/search_backaliment/search", name="searchbackaliment",methods={"GET"} )
+     */
+    public function search_backaliment(Request $request,AlimentRepository $alimentRepository): Response
+    {
 
+        $requestString = $request->get('searchValues');
+        $Aliments = $alimentRepository->findTeamwithNumber($requestString);
+        $responseArray = [];
+        $idx = 0;
+        foreach ($Aliments as $aliment) {
+            $temp = [
+                'idAliment' => $aliment->getIdAliment(),
+                'nom' => $aliment->getNom(),
+                'type' => $aliment->getType(),
+                'calories' => $aliment->getCalories(),
+                'image'=>$aliment->getImage(),
+                'description' => $aliment->getDescription(),
+
+            ];
+
+            $responseArray[$idx++] = $temp;
+        }
+        return new JsonResponse($responseArray);
+    }
 
     /**
      * @param AlimentRepository $alimentRepository
@@ -145,7 +170,7 @@ class AlimentController extends AbstractController
      */
     public function searchAliment(AlimentRepository $alimentRepository, Request $request)
     {
-        $requestString = $request->get('searchValue');
+        $requestString = $request->get('searchValueback');
         if (strlen($requestString) > 0) {
             $aliment = $alimentRepository->findAlimentByNom($requestString);
 
@@ -291,32 +316,7 @@ class AlimentController extends AbstractController
     }
 
 
-    /**
-     * @Route("/r/search_back1", name="search_back1",methods={"GET"})
-     */
 
-    public function search_back1(Request $request,AlimentRepository $alimentRepository): Response
-    {
-
-        $requestString = $request->get('searchValue');
-        $Aliments = $alimentRepository->findTeamwithNumber($requestString);
-        $responseArray = [];
-        $idx = 0;
-        foreach ($Aliments as $aliment) {
-            $temp = [
-                'idAliment' => $aliment->getIdAliment(),
-                'nom' => $aliment->getNom(),
-                'type' => $aliment->getType(),
-                'calories' => $aliment->getCalories(),
-                'image'=>$aliment->getImage(),
-                'description' => $aliment->getDescription(),
-
-            ];
-
-            $responseArray[$idx++] = $temp;
-        }
-        return new JsonResponse($responseArray);
-    }
 
     /**
      * @Route("DOWNtriEQUIPE", name="DOWNtriEQUIPE",options={"expose"=true})

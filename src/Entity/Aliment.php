@@ -5,7 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Component\Serializer\Annotation\Groups;
+//use JsonSerializable;
 
 
 /**
@@ -13,7 +14,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="aliment")
  * @ORM\Entity
+ *
  */
+//implements JsonSerializable
 class Aliment
 {
     /**
@@ -22,6 +25,7 @@ class Aliment
      * @ORM\Column(name="id_aliment", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("post:read")
      */
     private $idAliment;
 
@@ -29,6 +33,7 @@ class Aliment
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=20, nullable=false)
+     * @Groups("post:read")
      */
     private $nom;
 
@@ -36,6 +41,7 @@ class Aliment
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=20, nullable=false)
+     *  @Groups("post:read")
      */
     private $type;
 
@@ -43,6 +49,7 @@ class Aliment
      * @var string
      * @Assert\File(mimeTypes={"image/jpeg","image/gif","image/png"})
      * @ORM\Column(name="image", type="string", length=255, nullable=false)
+     * @Groups("post:read")
      */
     private $image;
 
@@ -52,6 +59,7 @@ class Aliment
      * @Assert\LessThan(150)
      * @Assert\GreaterThanOrEqual(0)
      * @ORM\Column(name="calories", type="integer", nullable=false)
+     * @Groups("post:read")
      */
     private $calories;
 
@@ -65,6 +73,7 @@ class Aliment
      *      allowEmptyString = false
      * )
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
+     * @Groups("post:read")
      */
     private $description;
 
@@ -164,6 +173,24 @@ class Aliment
     {
         $this->idAliment = $idAliment;
     }
-
+    public function jsonSerialize(): array
+    {
+        return array(
+            'idAliment' => $this->idAliment,
+            'nom' => $this->nom,
+            'type' => $this->type,//string
+            'image'=> $this->image,
+            'calories' => $this->calories,//string
+            'description' => $this->description,//string
+        );
+    }
+    public function setUp($nom, $type,$image, $calories, $description)
+    {
+        $this->nom = $nom;
+        $this->type= $type;
+        $this->image=$image;
+        $this->calories = $calories;
+        $this->description = $description;
+    }
 
 }

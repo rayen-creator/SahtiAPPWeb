@@ -37,6 +37,13 @@ class Livraison
      */
     private $commande;
 
+    /**
+     * @var int 
+     * @ORM\Column(name="id_client", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="livraisons")
+     */
+    private $client;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +93,24 @@ class Livraison
     public function setCommande(?Commandes $commande): self
     {
         $this->commande = $commande;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+    public function setIdClient(?int $client): self
+    {
+        $this->client = $client;
 
         return $this;
     }

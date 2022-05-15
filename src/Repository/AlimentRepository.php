@@ -46,6 +46,14 @@ class AlimentRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+    public function findByNameasc()
+    {
+        return $this->createQueryBuilder('aliment')
+            ->orderBy(' user.nom','ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     public function findTeamwithNumber($num){
         return $this->createQueryBuilder('Aliment')

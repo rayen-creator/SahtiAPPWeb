@@ -86,12 +86,15 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
+                    {% if is_granted('ROLE_ADMIN') %}
+
                     <li class="menu-item active">
                         <a href="/adminpanel" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Admin Panel</div>
                         </a>
                     </li>
+                    {% endif %}
 
                     <!-- Layouts -->
 
@@ -119,15 +122,35 @@
                     <li class="menu-header small text-uppercase"><span class="menu-header-text">Nutristionist</span></li>
                     <!-- Cards -->
                     <li class="menu-item">
-                        <a href="" class="menu-link">
+                        <a href="/regime" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
-                            <div data-i18n="Basic">Cards</div>
+                            <div data-i18n="Basic">Regime</div>
                         </a>
                     </li>
+                        <li class="menu-item">
+                            <a href="/aliment" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-collection"></i>
+                                <div data-i18n="Basic">aliment</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="/repas" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-collection"></i>
+                                <div data-i18n="Basic">repas</div>
+                            </a>
+                        </li>
                     {% endif %}
                     <!-- User interface -->
 
-
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="menu-header small text-uppercase"><span class="menu-header-text">Feedbacks</span></li>
+                        <li class="menu-item">
+                            <a href="/reclamations" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-table"></i>
+                                <div data-i18n="Tables">Manage feedbacks</div>
+                            </a>
+                        </li>
+                    {% endif %}
                     {% if is_granted('ROLE_COACH') %}
                     <li class="menu-header small text-uppercase"><span class="menu-header-text">Coach</span></li>
 
@@ -150,37 +173,29 @@
                         </a>
                     </li>
                     {% endif %}
-                    <li class="menu-header small text-uppercase"><span class="menu-header-text">Shop</span></li>
-                    <li class="menu-item">
-                        <a
-                                href=""
-                                target="_blank"
-                                class="menu-link"
-                        >
-                            <i class="menu-icon tf-icons bx bx-support"></i>
-                            <a href="/produit"><div data-i18n="Support" >Product</div></a>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a
-                                href=""
-                                target="_blank"
-                                class="menu-link"
-                        >
-                            <i class="menu-icon tf-icons bx bx-file"></i>
-                            <div data-i18n="Documentation" ><a href="/promotion">Promotion</a></div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a
-                                href=""
-                                target="_blank"
-                                class="menu-link"
-                        >
-                            <i class="menu-icon tf-icons bx bx-file"></i>
-                            <div data-i18n="Documentation" ><a href="/categorie">Categorie</div>
-                        </a>
-                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="menu-header small text-uppercase"><span class="menu-header-text">SHOP</span></li>
+
+                        <li class="menu-item">
+                            <a href="/produit" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-table"></i>
+                                <div data-i18n="Tables">Product</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="/promotion" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-table"></i>
+                                <div data-i18n="Tables">Promotion</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="/categorie" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-table"></i>
+                                <div data-i18n="Tables">Categorie</div>
+                            </a>
+                        </li>
+                    {% endif %}
+
 
                 </ul>
             </aside>

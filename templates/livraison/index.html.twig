@@ -11,8 +11,7 @@
     <table class="table">
       <thead>
             <tr>
-                <th>Livré</th>
-                <th>Commandé le</th>
+                <th>Commande n°=</th>
                 <th>Livré?</th>
                 <th>Etat commande (payé/non payé)</th>
             </tr>
@@ -20,12 +19,11 @@
         <tbody>
         {% for livraison in livraisons %}
             <tr>
-                <td>{{ livraison.commande.etat }}</td>
-                <td>{{ livraison.createdAt ? livraison.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ livraison.modifiedAt ? livraison.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ livraison.commande.numCmd }}</td>
+            <td><span class="badge bg-label-info me-1">{{ livraison.etatLivraison ? 'livrée' : 'Non livrée' }}</span></td>
+            <td><span class="badge bg-label-info me-1">{{ livraison.commande.etat ? 'Payé' : 'Non payé' }}</span></td>
                 <td>
-                    <a href="{{ path('app_livraison_show', {'id': livraison.id}) }}">show</a>
-                    <a href="{{ path('app_livraison_edit', {'id': livraison.id}) }}">edit</a>
+                    <a href="{{ path('app_livraison_show', {'id': livraison.id}) }}">Afficher</a>
                 </td>
             </tr>
         {% else %}

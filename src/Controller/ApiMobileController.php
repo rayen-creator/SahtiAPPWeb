@@ -36,7 +36,7 @@ class ApiMobileController extends AbstractController
      * @param NormalizerInterface $Normalizer
      * @return Response
      * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
-     * @Route("/admin/listclient",name ="adminlistclient")
+     * @Route("/adminlistclient",name ="adminlistclient")
      */
     public function listclient(Request $request, NormalizerInterface $Normalizer)
     {
@@ -83,28 +83,57 @@ class ApiMobileController extends AbstractController
     //-------------------------------------Delete---------------------------------
 
     /**
-     * @Route("/admin/deleteclientjson/{id}",name ="deleteclientjson")
+     * @Route("/admin/deleteclientjson",name ="/admin/deleteclientjson")
      * @param Request $request
-     * @param $id
      * @param NormalizerInterface $Normalizer
      * @return Response
      * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
      */
-    public function deleteC($id, NormalizerInterface $Normalizer)
+    public function deleteC(Request $request, NormalizerInterface $Normalizer)
     {
-        $listec = $this->getDoctrine()->getRepository(Client::class)->find($id);
+        $listec = $this->getDoctrine()->getRepository(Client::class)->find($request->get('id'));
         $em = $this->getDoctrine()->getManager();
         $em->remove($listec);
         $em->flush();
 
-//        $jsonContent=$Normalizer->normalize($listec,'json',['groups'=>'user']);
-
-        //testing delete by reading the entity to delete
         $jsonContent = $Normalizer->normalize($listec, 'json', ['groups' => 'post:read']);
-
 
         return new Response("Delete was success" . json_encode($jsonContent));
     }
+
+    /**
+     * @Route("/admin/banclientjson",name ="/admin/banclientjson")
+     * @param ClientRepository $em
+     * @param Request $request
+     * @param NormalizerInterface $Normalizer
+     * @return Response
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
+     */
+    public function block( ClientRepository $em , Request $request, NormalizerInterface $Normalizer){
+
+        $foundclient = $this->getDoctrine()->getRepository(Client::class)->find($request->get('id'));
+        $cb = $em->blockclient($foundclient);
+
+        $jsonContent = $Normalizer->normalize($foundclient, 'json', ['groups' => 'post:read']);
+
+        return new Response("ban was success" . json_encode($jsonContent));
+    }
+
+    /**
+     * @Route("/admin/unbanclientjson",name ="/admin/unbanclientjson")
+     * @param $id
+     * @param ClientRepository $em
+     * @param Request $request
+     * @param NormalizerInterface $Normalizer
+     * @return Response
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
+     */
+    public function unblock(  ClientRepository $em , Request $request, NormalizerInterface $Normalizer){
+        $foundclient = $this->getDoctrine()->getRepository(Client::class)->find($request->get('id'));
+        $cb = $em->unblockclient($foundclient);
+        $jsonContent = $Normalizer->normalize($foundclient, 'json', ['groups' => 'post:read']);
+
+        return new Response("unban was success" . json_encode($jsonContent));    }
 
     /**
      * @Route("/admin/deletecoachjson/{id}",name ="deletecoachjson")
@@ -189,7 +218,7 @@ class ApiMobileController extends AbstractController
         $client->setNom($request->get('nom'));
         $client->setPrenom($request->get('prenom'));
         $client->setEmail($request->get('email'));
-        $client->setPasswd($request->get('passwd'));
+        $client->setPasswd(md5($request->get('passwd')));
         $client->setAdresse($request->get('adresse'));
         $client->setDatenaiss($request->get('datenaiss'));
 
@@ -229,7 +258,7 @@ class ApiMobileController extends AbstractController
         $coach->setNom($request->get('nom'));
         $coach->setPrenom($request->get('prenom'));
         $coach->setEmail($request->get('email'));
-        $coach->setPasswd($request->get('passwd'));
+        $coach->setPasswd(md5($request->get('passwd')));
         $coach->setAdresse($request->get('adresse'));
         $coach->setBio($request->get('bio'));
         $coach->setCertification($request->get('certification'));
@@ -270,7 +299,7 @@ class ApiMobileController extends AbstractController
         $nutri->setNom($request->get('nom'));
         $nutri->setPrenom($request->get('prenom'));
         $nutri->setEmail($request->get('email'));
-        $nutri->setPasswd($request->get('passwd'));
+        $nutri->setPasswd(md5($request->get('passwd')));
         $nutri->setAdresse($request->get('adresse'));
         $nutri->setBio($request->get('bio'));
         $nutri->setCertification($request->get('certification'));
@@ -299,8 +328,7 @@ class ApiMobileController extends AbstractController
      * @return Response
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
-    public function forgetpwd(MailerInterface $mailer, Request $request, ClientRepository $cr,
-                              CoachRepository $er, NutritionisteRepository $nr, NormalizerInterface $Normalizer)
+    public function forgetpwd(MailerInterface $mailer, Request $request, ClientRepository $cr, CoachRepository $er, NutritionisteRepository $nr, NormalizerInterface $Normalizer)
     {
 
         $mail = $request->get('email');
@@ -471,7 +499,56 @@ class ApiMobileController extends AbstractController
         return new Response(json_encode($jsonContent));
     }
 
+    /**
+     * @Route("/jsonlogincoach", name="jsonlogincoach")
+     * @param Request $request
+     * @param NormalizerInterface $Normalizer
+     * @return Response
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
+     */
+    public function jsonlogincoach(Request $request , NormalizerInterface $Normalizer)
+    {
+        $email = $request->get('email');
+        $pwd = $request->get('passwd');
+
+        $result = $this->getDoctrine()->getRepository(Entraineur::class)->findOneBy(
+            array('email' => $email, 'passwd' => md5($pwd))
+        );
+        if ( $result){
+            $jsonContent = $Normalizer->normalize(true, 'json', ['groups' => 'post:read']);
+        }else{
+            $jsonContent = $Normalizer->normalize(false, 'json', ['groups' => 'post:read']);
+        }
+        return new Response(json_encode($jsonContent));
+    }
+
+    /**
+     * @Route("/jsonloginnutri", name="jsonloginnutri")
+     * @param Request $request
+     * @param NormalizerInterface $Normalizer
+     * @return Response
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
+     */
+    public function jsonloginnutri(Request $request , NormalizerInterface $Normalizer)
+    {
+        $email = $request->get('email');
+        $pwd = $request->get('passwd');
+
+        $result = $this->getDoctrine()->getRepository(Nutritioniste::class)->findOneBy(
+            array('email' => $email, 'passwd' => md5($pwd))
+        );
+        if ( $result){
+            $jsonContent = $Normalizer->normalize(true, 'json', ['groups' => 'post:read']);
+        }else{
+            $jsonContent = $Normalizer->normalize(false, 'json', ['groups' => 'post:read']);
+        }
+        return new Response(json_encode($jsonContent));
+    }
+
+
     //*******************************LOGIN*************************************************
+
+    //*******************************BLocked status***********************************************
 
     /**
      * @Route("/loggedinblocked", name="loggedinblocked")
@@ -483,22 +560,83 @@ class ApiMobileController extends AbstractController
 
     public function loggedinblocked(Request $request , NormalizerInterface $Normalizer)
     {
-        $repository = $this -> getDoctrine() -> getRepository(Client::class);
+//        $repository = $this -> getDoctrine() -> getRepository(Client::class);
         $email = $request->get('email');
         $pwd = $request->get('passwd');
 
-        $clientstate=$repository->clientisblocked($email,$pwd);
-       if ($clientstate){
-       $jsonContent = $Normalizer->normalize($clientstate, 'json', ['groups' => 'post:read']);
-
-    }else{
-           $jsonContent = $Normalizer->normalize($clientstate, 'json', ['groups' => 'post:read']);
-
-    }
-
-
+        $clientstate = $this->getDoctrine()->getRepository(Client::class)->findOneBy(
+            array('email' => $email, 'passwd' => md5($pwd))
+        );
+        if($clientstate){
+            if ($clientstate->getIsblocked()==true){
+                $jsonContent = $Normalizer->normalize(false, 'json', ['groups' => 'post:read']);
+            }else{
+                $jsonContent = $Normalizer->normalize( true, 'json', ['groups' => 'post:read']);
+            }
+        }else{
+            $jsonContent = $Normalizer->normalize( null, 'json', ['groups' => 'post:read']);
+        }
         return new Response(json_encode($jsonContent));
     }
+
+    /**
+     * @Route("/loggedinblockedcoach", name="loggedinblockedcoach")
+     * @param Request $request
+     * @param NormalizerInterface $Normalizer
+     * @return Response
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
+     */
+
+    public function loggedinblockedcoach(Request $request , NormalizerInterface $Normalizer)
+    {
+//        $repository = $this -> getDoctrine() -> getRepository(Client::class);
+        $email = $request->get('email');
+        $pwd = $request->get('passwd');
+
+        $coachstate = $this->getDoctrine()->getRepository(Entraineur::class)->findOneBy(
+            array('email' => $email, 'passwd' => md5($pwd))
+        );
+        if($coachstate){
+            if ($coachstate->getIsblocked()==true){
+                $jsonContent = $Normalizer->normalize(false, 'json', ['groups' => 'post:read']);
+            }else{
+                $jsonContent = $Normalizer->normalize( true, 'json', ['groups' => 'post:read']);
+            }
+        }else{
+            $jsonContent = $Normalizer->normalize( null, 'json', ['groups' => 'post:read']);
+        }
+        return new Response(json_encode($jsonContent));
+    }
+
+    /**
+     * @Route("/loggedinblockednutri", name="loggedinblockednutri")
+     * @param Request $request
+     * @param NormalizerInterface $Normalizer
+     * @return Response
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
+     */
+
+    public function loggedinblockednutri(Request $request , NormalizerInterface $Normalizer)
+    {
+//        $repository = $this -> getDoctrine() -> getRepository(Client::class);
+        $email = $request->get('email');
+        $pwd = $request->get('passwd');
+
+        $nutristate = $this->getDoctrine()->getRepository(Nutritioniste::class)->findOneBy(
+            array('email' => $email, 'passwd' => md5($pwd))
+        );
+        if($nutristate){
+            if ($nutristate->getIsblocked()==true){
+                $jsonContent = $Normalizer->normalize(false, 'json', ['groups' => 'post:read']);
+            }else{
+                $jsonContent = $Normalizer->normalize( true, 'json', ['groups' => 'post:read']);
+            }
+        }else{
+            $jsonContent = $Normalizer->normalize( null, 'json', ['groups' => 'post:read']);
+        }
+        return new Response(json_encode($jsonContent));
+    }
+
 
 }
 

@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Reclamations;
+use App\Entity\Client;
 
 use App\Form\ReclamationsType;
 use App\Repository\ReclamationRepository;
+
+use App\Repository\ClientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,9 +26,24 @@ class ReclamationsController extends AbstractController
     /**
      * @Route("/", name="app_reclamations_index", methods={"GET"})
      */
-    public function index(PaginatorInterface $paginator, Request $request,EntityManagerInterface $entityManager, ReclamationRepository $reclamationRepository): Response
+    public function index(PaginatorInterface $paginator, Request $request, ClientRepository $usrRep,EntityManagerInterface $entityManager, ReclamationRepository $reclamationRepository): Response
     {
+        $client = new Client();
+        $reclamations = new Reclamations();
+        $user=$this->getUser()->getUsername();
+        $role=$this->getUser()->getRoles();
+//        var_dump($role);
+        if ( ($user != null) && (in_array("ROLE_USER", $role) ) )
+        {
+            $currentuser=$usrRep->findOneBy(array('email'=>$user));
+            $id= $currentuser->getId();
+            $reclamations = $entityManager->getRepository(Reclamations::class)->findBy(array("client"=>$id));
+
+        }else if (in_array("ROLE_ADMIN", $role)) {
         $reclamations = $entityManager->getRepository(Reclamations::class)->findAll();
+
+        }
+
             $haute = array("SYSTEME", "Systeme", "systeme", "CRITIQUE", "Erreur","ERREUR", "SPAM", "ARNAQUE", "ERREUR", "BUG", "CRASH", "COMMANDE", "COMMANDES", "ANNULER", "PAIMENT", "LIVRAISON");
             $moyenne = array("COACH", "NUTRITIONNISTE", "coach", "Coach","ACHAT", "EVOLUTION");
             //contient les message des réclamations
@@ -41,7 +59,8 @@ class ReclamationsController extends AbstractController
             //initialisation du priorité à low
             $priorite = 0;
             //Entité réclamation
-            $eRec = new Reclamations();            
+
+
             foreach ($reclamations as $item ){
                $reclamationTab[$i]=$item->getNumreclamation()."\n".($item->getMessage());
                $i++;
@@ -86,22 +105,29 @@ class ReclamationsController extends AbstractController
             for ($i=0; $i<count($resultTab); $i++){
                 for($j=0; $j<1; $j++){
                     $test[$k]=$resultTab[$i][$j];
+                    
                     $k++;                    
                 }
+              
             }
-            $final = $reclamationRepository->findAll();
-            $j=0;
-            for ($i = 0; $i<count($final); $i++){
-                if ($final[$i]->getNumreclamation() !==  $resultTab[$j][0]->getNumReclamation()){
-                if ($j>=count($resultTab)){
-                    $test[count($test)] = $final[$i];
-                    $j++;
-                   
+            $final = $reclamations;
+            if (count($final) > 2 && count($resultTab) > 0){
+                $j=0;
+                $countTab = count($resultTab);
+                for($j=0; $j<$countTab-1;$j++){
+                for ($i = 0; $i<count($final)-1; $i++){
+                    
+                    //if (count($test)-1>=$j){
+                        if ($final[$i]->getNumreclamation() !==  $test[$j]->getNumReclamation()){
+                            $test[count($test)] = $final[$i];
+                            
+                         }
+                    }
                 }
-            }                    
-                    $test[count($test)] = $final[$i];
-            }
-            //dd($test);
+
+            }else
+                $test=$reclamations;
+            
             //pagination
             $test = $paginator->paginate($test,$request->query->getInt('page',1) ,6);
             //dd($reclamations);
@@ -136,10 +162,22 @@ class ReclamationsController extends AbstractController
     /**
      * @Route("/new", name="app_reclamations_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request,ClientRepository $usrRep, ReclamationRepository $reclamationRepository, EntityManagerInterface $entityManager): Response
     {
+        $client = new Client();
+        $user=$this->getUser()->getUsername();
+        $currentuser=$usrRep->findOneBy(array('email'=>$user));
+        $id= $currentuser->getId();
         $i=0;
         $numReclamaiton = "22-04".$i++;
+        $rec = $reclamationRepository->findOneBy(array(),array("id"=>"DESC"), 1,1);
+        if($rec != null){
+            $n = substr($rec->getNumreclamation(),-1,1);
+            $n = intval($n);
+            $n+=1;
+            $numReclamaiton[-1]=$n;
+        }
+        //dd($numReclamaiton);
         $reclamation = new Reclamations();
         $form = $this->createForm(ReclamationsType::class, $reclamation);
         $form->handleRequest($request);
@@ -147,6 +185,7 @@ class ReclamationsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $reclamation->getUploadFile();
             $reclamation->setNumreclamation($numReclamaiton);
+            $reclamation->setClient($id);
 //            $reclamation->setDatereclamation(strval(new Date('now', "yyyy-MM-dd")));
             $entityManager->persist($reclamation);
             $entityManager->flush();

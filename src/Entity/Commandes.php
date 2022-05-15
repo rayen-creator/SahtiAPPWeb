@@ -97,7 +97,13 @@ class Commandes
      */
     private $produit;
 
-
+     /**
+    * @var int 
+     * @ORM\Column(name="id_client", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="commandes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $client;
 
    
 
@@ -304,6 +310,21 @@ class Commandes
     public function removeProduit(Produit $produit): self
     {
         $this->produit->removeElement($produit);
+
+        return $this;
+    }
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+    public function getIdClient(): ?int
+    {
+        return $this->client;
+    }
+
+    public function setClient(?int $client): self
+    {
+        $this->client = $client;
 
         return $this;
     }

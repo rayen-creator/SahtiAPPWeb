@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -144,6 +145,11 @@ class Entraineur implements UserInterface
      * )
      */
     protected $captchaCode;
+
+     /**
+     * @ORM\OneToMany(targetEntity=Reclamations::class, mappedBy="coach")
+     */
+    private $reclamations;
 
     public function getCaptchaCode()
     {
@@ -301,5 +307,40 @@ class Entraineur implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    public function __construct()
+    {
+        $this->reclamations = new ArrayCollection();
+    }
+
+//    /**
+//     * @return Collection<int, Reclamations>
+//     */
+//    public function getReclamations(): Collection
+//    {
+//        return $this->reclamations;
+//    }
+
+    public function addReclamation(Reclamations $reclamation): self
+    {
+        if (!$this->reclamations->contains($reclamation)) {
+            $this->reclamations[] = $reclamation;
+            $reclamation->setCoach($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReclamation(Reclamations $reclamation): self
+    {
+        if ($this->reclamations->removeElement($reclamation)) {
+            // set the owning side to null (unless already changed)
+            if ($reclamation->getCoach() === $this) {
+                $reclamation->setCoach(null);
+            }
+        }
+
+        return $this;
     }
 }

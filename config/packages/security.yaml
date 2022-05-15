@@ -63,6 +63,19 @@ security:
      - { path: ^/resetpwd, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
      - { path: ^/registre, roles: IS_AUTHENTICATED_ANONYMOUSLY }
      - { path: ^/adminpanel, roles: ROLE_ADMIN }
-     -  { path: ^/profile/listavailablecoach, roles: ROLE_USER }
-     -  { path: ^/profile/listavailablenutri, roles: ROLE_USER }
+     - { path: ^/profile/listavailablecoach, roles: ROLE_USER }
+     - { path: ^/profile/listavailablenutri, roles: ROLE_USER }
      - { path: ^/profile, roles: [ROLE_USER, ROLE_COACH,ROLE_NUTRI] }
+     - { path: ^/magasin, roles: ROLE_USER }
+     - { path: ^/produit, roles: ROLE_ADMIN }
+     - { path: ^/promotion, roles: ROLE_ADMIN }
+     - { path: ^/categorie, roles: ROLE_ADMIN }
+     - { path: ^/regime, roles: ROLE_NUTRI }
+     - { path: ^/aliment, roles: ROLE_NUTRI }
+     - { path: ^/repas, roles: ROLE_NUTRI }
+     - { path: ^/programmeentraineur, roles: ROLE_COACH }
+     - { path: ^/suivieevolution, roles: ROLE_COACH }
+     - { path: ^/progclient, roles: ROLE_COACH }
+     - { path: ^/panier, roles: ROLE_USER }
+     - { path: ^/reclamations, roles: [ROLE_USER , ROLE_ADMIN] }
+

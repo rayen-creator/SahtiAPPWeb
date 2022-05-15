@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Produit
@@ -19,6 +20,8 @@ class Produit
      * @ORM\Column(name="id_prod", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups ("post:read")
+
      */
     private $idProd;
 
@@ -30,6 +33,7 @@ class Produit
      *
      *     )
      * @ORM\Column(type="string", length=255)
+     *  @Groups ("post:read")
      */
     private $nom;
 
@@ -37,6 +41,7 @@ class Produit
      * @Assert\NotNull(message=" prix doit etre non vide")
      *@Assert\Positive(message="le prix doit etre positive")
      * @ORM\Column(name="prix", type="float", precision=10, scale=0)
+     * @Groups ("post:read")
      */
     private $prix;
 
@@ -48,6 +53,7 @@ class Produit
      *      minMessage = "doit etre >=7 ",
      *      maxMessage = "doit etre <=500" )
      * @ORM\Column(type="string", length=1000)
+     * @Groups ("post:read")
      */
     private $image;
 
@@ -55,12 +61,14 @@ class Produit
      * @Assert\NotBlank(message=" quantite doit etre non vide")
      *@Assert\Positive(message="la quantite doit etre positive")
      * @ORM\Column(name="quantite", type="integer")
+     * @Groups ("post:read")
      */
     private $quantite;
 
     /**
      * @Assert\NotBlank(message="description doit etre non vide")
      * @ORM\Column(type="string")
+     * @Groups ("post:read")
      */
     private $descprod;
 
@@ -71,6 +79,7 @@ class Produit
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="id_cat", referencedColumnName="id_cat")
      * })
+     * @Groups ("post:read")
      */
     private $idCat;
 

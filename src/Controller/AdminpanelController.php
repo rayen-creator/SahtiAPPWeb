@@ -184,7 +184,7 @@ class AdminpanelController extends AbstractController
      * @Route("/adminpanel/deletecoach/{id}",name ="deletecoach")
      */
     public function deleteE($id){
-        $listee= $this -> getDoctrine() -> getRepository(Client::class)->find($id);
+        $listee= $this -> getDoctrine() -> getRepository(Entraineur::class)->find($id);
         $em=$this -> getDoctrine()->getManager();
         $em->remove($listee);
         $em->flush();

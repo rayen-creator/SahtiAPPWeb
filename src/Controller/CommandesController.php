@@ -39,10 +39,18 @@ class CommandesController extends AbstractController
     /**
      * @Route("/", name="app_commandes_index", methods={"GET"})
      */
-    public function index(CommandesRepository $commandesRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(CommandesRepository $commandesRepository,ClientRepository $usrRep, PaginatorInterface $paginator, Request $request): Response
     {
         $client = new Client();
-        $commandes = $commandesRepository->findBy(array("etat"=>0));
+        $user=$this->getUser()->getUsername();
+        
+        $currentuser=$usrRep->findOneBy(array('email'=>$user));
+        $id= $currentuser->getId();
+        if($user == "Admin@sahti.com")
+            $commandes = $commandesRepository->findBy(array(),array('etat'=>"asc"));
+        else
+            $commandes = $commandesRepository->findBy(array('client' => $id), array('etat' => "asc"));
+
         $commandes = $paginator->paginate($commandes,$request->query->getInt('page',1) ,6);
 
 
@@ -65,6 +73,7 @@ class CommandesController extends AbstractController
         $user=$this->getUser()->getUsername();
         $currentuser=$usrRep->findOneBy(array('email'=>$user));
         $id= $currentuser->getId();
+        //dd($id);
         //*********************
 
         $panier = $session->get('panier', []);
@@ -95,6 +104,7 @@ class CommandesController extends AbstractController
         $commande->setEtat(0);
         $commande->setQtecmd($quatity);
         $commande->setModePay("Carte bancaire");
+       
         //$commande
         $em = $this->getDoctrine()->getManager();
         $em->persist($commande);
@@ -123,17 +133,25 @@ class CommandesController extends AbstractController
         }
         //dd($idTab[0]);
             $idCommande = $commandesRepository->findOneBy(array(),array('id'=>'DESC'),1,0);
-        return $this->redirectToRoute('payment', ['id'=>$idCommande->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('payment', ['id'=>$idCommande->getId(), "client"=>$id], Response::HTTP_SEE_OTHER);
            
     }
 
     /**
      * @Route("/{id}", name="app_commandes_show", methods={"GET"})
      */
-    public function show(Commandes $commande, ProduitRepository $produit, Request $request, LigneCommandeRepository $lcommandeRepository): Response
+    public function show(Commandes $commande, ProduitRepository $produit, ClientRepository $usrRep, Request $request, LigneCommandeRepository $lcommandeRepository): Response
     {
-        $id = $request->get('id');
-        $idsProd = $lcommandeRepository->findBy(array('idCmd' => $id ),array());
+        $idcmd = $request->get('id');
+        ###
+        $client = new Client();
+        $user=$this->getUser()->getUsername();
+
+        $currentuser=$usrRep->findOneBy(array('email'=>$user));
+        $id= $currentuser->getId();
+        
+        ####
+        $idsProd = $lcommandeRepository->findBy(array('idCmd' => $idcmd ),array());
             //dd($idsProd);
         $produits=array();
         for ($i=0; $i<count($idsProd); $i++){
@@ -153,6 +171,7 @@ class CommandesController extends AbstractController
      */
     public function edit(Request $request, Commandes $commande, CommandesRepository $commandesRepository): Response
     {
+        
         $form = $this->createForm(CommandesType::class, $commande);
         $form->handleRequest($request);
 
@@ -186,7 +205,7 @@ class CommandesController extends AbstractController
      * @param $produitRepository
      * @return Response
      */
-    public function validerCommande(Request $request, SessionInterface $session, ProduitRepository $produitRepository ): Response
+    public function validerCommande(Request $request, SessionInterface $session, ClientRepository $usrRep, ProduitRepository $produitRepository ): Response
     {
         $panier = $session->get('panier', []);
         $panierWithData = [];
@@ -201,13 +220,21 @@ class CommandesController extends AbstractController
             $totalItem = $item['produit']->getPrix() * $item['quantite'];
             $total += $totalItem;
         }
+        $client = new Client();
+        $user=$this->getUser()->getUsername();
+        $currentuser=$usrRep->findOneBy(array('email'=>$user));
+        $id= $currentuser->getId();
+
+
         $commande = new Commandes();
         $commande->setNumCmd("test");
         $commande->setMontantCmd($total);
         $commande->setCommentaire("test Comment");
         $commande->setEtat(1);
         $commande->setQtecmd($quatity);
-        $commande->setModePay("carte");
+        $commande->setModePay("Carte bancaire");
+        $commande->setClient($id);
+
         //$commande//
         $em = $this->getDoctrine()->getManager();
         $em->persist($commande);
