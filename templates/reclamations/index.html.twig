@@ -95,7 +95,8 @@
                 <td>{{ reclamation.numreclamation }}</td>
                 <td>{{ reclamation.titre }}</td>
                 <td>{{ reclamation.type }}</td>
-                <td>{{ reclamation.cloturer ? 'Cloturé' : 'Non cloturé' }}</td>
+                <td><span class="badge bg-label-success me-1">{{ reclamation.cloturer ? 'Cloturé' : 'Non cloturé' }}</span></td>
+
                 <td>
                     <a href="{{ path('app_reclamations_show', {'id': reclamation.id}) }}">Afficher</a>
                 </td>

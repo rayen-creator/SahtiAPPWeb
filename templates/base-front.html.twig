@@ -93,7 +93,7 @@
                                     </li>
                                     {% endif %}
                                     {% if is_granted('ROLE_NUTRI') %}
-                                        <li><a href="/front" >regime</a></li>
+                                        <li><a href="{{ path('aliment_front') }}" >regime</a></li>
 
                                     {% endif %}
                                     {% if is_granted('ROLE_USER') %}

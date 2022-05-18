@@ -44,10 +44,7 @@
     <a href="{{ path('app_reclamations_index') }}" class="pr-3">Retour à la liste des réclamations</a>
 
     <a href="{{ path('app_reclamations_edit', {'id': reclamation.id}) }}" claas>Modifier</a>
-    {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('app_reclamations_cloture', {'id': reclamation.id}) }}" >Cloturer</a>
-
-    {% endif %}
 
 
     {{ include('reclamations/_delete_form.html.twig') }}

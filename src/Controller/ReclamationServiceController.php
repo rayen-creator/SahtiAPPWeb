@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 
  /**
- * @Route("/reclamations")
+ * @Route("/reclam")
  */
 class ReclamationServiceController extends AbstractController
 {

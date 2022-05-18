@@ -33,7 +33,9 @@
             <tr>
                 <td>{{ regime.idRegime }}</td>
                 <td>{{ regime.objectif }}</td>
+{#                <td>{{ regime.dateDebut ? regime.dateDebut|date('Y-m-d') : '' }}</td>#}
                 <td>{{ regime.dateDebut ? regime.dateDebut|date('Y-m-d') : '' }}</td>
+
                 <td>{{ regime.duree }}</td>
                 <td>{{ regime.maxCalories }}</td>
                 <td>{{ regime.nbRepas }}</td>

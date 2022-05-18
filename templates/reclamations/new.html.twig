@@ -1,6 +1,6 @@
 {% extends 'base-back.html.twig' %}
 
-{% block title %}New Reclamations{% endblock %}
+{% block title %}Réclamation{% endblock %}
 
 {% block body %}
     <h1>Create new Reclamations</h1>
@@ -18,5 +18,7 @@
                     </div>
 
 </div>
-    <a href="{{ path('app_reclamations_index') }}">back to list</a>
+<div class="form-group">
+    <a href="{{ path('app_reclamations_index') }}" class="btn btn-info">revenir</a>
+    </div>
 {% endblock %}
