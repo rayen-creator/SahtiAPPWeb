@@ -6,6 +6,7 @@
 <img alt="GitHub forks" src="https://img.shields.io/github/forks/rayen-creator/SahtiAPPWeb">
  
 <h3 align="center">SAHTI web app</h3>
+<img alt="logo" src="https://github.com/rayen-creator/SahtiAPPWeb/blob/main/SAHTI_without_bg.png" />
   
   <p align="center">
 This is the official SAHTI web app documentation <br/>
