@@ -79,4 +79,4 @@ _In order to install the app you need to follow the instructions below :_
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-Developed with 💕 by **Creativity crew**.
+Developed with :heart: by **Creativity crew**.
