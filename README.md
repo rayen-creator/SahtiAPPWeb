@@ -13,34 +13,9 @@ This is the official SAHTI web app documentation <br/>
 
  </div>
 
-  
-  <!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#-about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#-built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#-getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#-prerequisites">Prerequisites</a></li>
-        <li><a href="#-installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#-contributing">Contributing</a></li>
-
-
-  </ol>
-</details>
 
 ## 📃 About The Project
-
-
-
+Sahti is a cross platform app designed to help people attend coaching course online and get in touch with nutritionist in order to help them get the right diet , the app also offer a online shop for athletes to get their equipement and supply .
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -95,21 +70,6 @@ _In order to install the app you need to follow the instructions below :_
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
-<!-- CONTRIBUTING -->
-## 😎 Contributing
-
-If you have a suggestion that would make this project better, please fork the repo and create a pull request. Any contributions you make are **greatly appreciated**.
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b Yourbranch`)
-3. Commit your Changes (`git commit -m 'Add some features to project'`)
-4. Push to the Branch (`git push origin Yourbranch`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
