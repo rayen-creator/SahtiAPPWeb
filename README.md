@@ -16,7 +16,10 @@ This is the official SAHTI web app documentation <br/>
 
 
 ## 📃 About The Project
-Sahti is a cross platform app designed to help people attend coaching course online and get in touch with nutritionist in order to help them get the right diet , the app also offer a online shop for athletes to get their equipement and supply .
+Sahti is a cross platform app designed to help people attend coaching course online and get in touch with nutritionist in order to help them get the right diet , the app also offer a online shop for athletes to get their equipements and supplies .
+
+[Sahti Desktop App](https://github.com/rayen-creator/SahtiAppDektop) <br/>
+[Sahti Mobile App](https://github.com/rayen-creator/SahtiAPPMobile)
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
