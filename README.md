@@ -1,13 +1,11 @@
-#  Sahti web app
 <div id="top" align="center">
  
 
   
  <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/rayen-creator/SahtiAPPWeb">
-
-
+<img alt="GitHub forks" src="https://img.shields.io/github/forks/rayen-creator/SahtiAPPWeb">
  
-<h3 align="center">Kadem web app</h3>
+<h3 align="center">SAHTI web app</h3>
   
   <p align="center">
 This is the official SAHTI web app documentation <br/>
@@ -53,28 +51,12 @@ This is the official SAHTI web app documentation <br/>
 <br/>
 
 
+
+
   <div align="center">
-	
-<a href="https://dev.mysql.com/" title="MySQL">
-  <img src="https://github.com/get-icon/geticon/raw/master/icons/mysql.svg" alt="MySQL" width="150" height="150"></a>
+<a href="https://symfony.com/" title="Symfony"><img src="https://github.com/get-icon/geticon/raw/master/icons/symfony.svg" alt="Symfony" width="100px" height="100px"></a>
+<a href="https://dev.mysql.com/" title="MySQL"><img src="https://github.com/get-icon/geticon/raw/master/icons/mysql.svg" alt="MySQL" width="100px" height="100px"></a>
 
-	
- <a href="https://angular.io/" title="Angular">
-   <img src="https://github.com/get-icon/geticon/raw/master/icons/angular-icon.svg" alt="Angular" width="150" height="150">
-  </a>
-
-	
-  <a href="https://nodejs.org/en/">
-    <img src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-original-wordmark.svg" title="NodeJS" alt="NodeJS" width="150" height="150"/>
- </a>
-  <a href="http://expressjs.com/">
-    <img src="https://github.com/devicons/devicon/blob/master/icons/express/express-original-wordmark.svg" title="ExpressJS" alt="ExpressJS" width="150" height="150"/>
-    </a>
-  
- <a href="https://spring.io/" title="Spring">
-   <img src="https://github.com/get-icon/geticon/raw/master/icons/spring.svg" alt="Spring" width="150" height="150"></a>
-
-  </a>
   </div>
   
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -88,8 +70,8 @@ To get a local copy up and running follow these simple example steps.
 ### 🚧 Prerequisites
 
 You may find below the list of things you need to use this project :
-* Make sure nodejs is running on your system.
-* You will need to install the "yarn" or "npm" command line.
+* Make sure mysql is running on your system.
+* You will need to install the "composer" command line.
 
 ### 🛠 Installation
 
@@ -97,32 +79,21 @@ _In order to install the app you need to follow the instructions below :_
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/ahlem-phantom/AI-HealthCare-Assistant.git
+   git clone https://github.com/rayen-creator/SahtiAPPWeb
    ```
-2. Install NPM packages dependencies 
+2. Install symfony bundles  
    ```sh
-   npm install 
-   ```
-   Or 
-   
-    ```sh
-   yarn install 
+   composer install
    ```
    
 3. Run the server on 
    ```sh
-   ng s --o
+   php bin/console server:run
    ```
-4. Open localhost:4200 in the browser and that's it you can enjoy the project 🎉!
-
-link to [springBoot_Backend](https://github.com/rayen-creator/MiniProject_Backend). <br/>
-link to [nodejs_backend](https://github.com/rayen-creator/UserAuth).
+4. Open localhost:8080 in the browser and that's it you can enjoy the project 🎉!
  
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
 
 
 
@@ -139,9 +110,6 @@ Don't forget to give the project a star! Thanks again!
 5. Open a Pull Request
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
