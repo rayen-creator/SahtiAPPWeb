@@ -5,7 +5,6 @@
   
  <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/rayen-creator/SahtiAPPWeb">
 
-<img alt="GitHub forks" src="https://img.shields.io/github/forks/rayen-creator/Mini_Project?style=for-the-badge">
 
  
 <h3 align="center">Kadem web app</h3>
@@ -41,8 +40,6 @@ This is the official SAHTI web app documentation <br/>
 </details>
 
 ## 📃 About The Project
-Kadem is an academic project build for student to help them explore professtionnel life finding new oppurtunty as intern or as employee as well the project isn't finish yet and it can evolve even more , we build it using nodejs express for authentification with jwt , springboot as backend and angular as frontend-framework using mysql as database 
-
 
 
 
